@@ -381,7 +381,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     as.integer(proximity),
                     as.integer(oob.prox),
                     as.integer(corr.bias),
-                    ypred = double(n),
+                    ypred = double(n*p),
                     impout = impout,
                     impmat = impmat,
                     impSD = impSD,
