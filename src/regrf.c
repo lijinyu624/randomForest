@@ -50,7 +50,7 @@ void regRF_wrapper(double *x, double *y, int *xdim, int *sampsize,
           upper, mse, keepf, replace,
            testdat, xts, nts,yts, labelts,
            yTestPred, proxts, msets, *coef,
-           nout, inbag)
+           nout, inbag);
 
 }
 
