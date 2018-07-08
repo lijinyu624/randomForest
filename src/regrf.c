@@ -29,35 +29,142 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
            double *yTestPred, double *proxts, double *msets, double *coef,
            int *nout, int *inbag);
 
-void regRF_wrapper(double *x, double *y, int *xdim, int *sampsize,
+
+//choose a subset of dimesions from xy. dim-1 is the new dimensions of x, that is dim is the total dimensions of x + y
+/*
+double** chooseVariableResponse(double* x,double* y, int dimTotal,int nsample, int dim){
+    int  nind[dimTotal];
+    int ktmp;
+    double xResult[dim*nsample];
+
+    double * xyResult[2]={xResult,yResult};
+
+    for (int s = 0; s < dimTotal; ++s) nind[s] = s;
+    last = dimTotal - 1;
+    for (s = 0; s < dim; ++s) {
+        ktmp = (int) (unif_rand() * (last+1));
+        k = nind[ktmp];
+        swapInt(nind[ktmp], nind[last]);
+        last--;
+        //in[k] += 1;
+        //yb[n] = y[k];
+      }
+
+    if(nind[dimTotal-1]==dimTotal-1) yResult=y;
+    else
+        for(int s = 0; s<nsample; s++)  
+              yResult[s]=x[nind[dimTotal-1]+s*dimTotal];
+
+    for(int s = 0; s<nsample; s++)  
+        for(int m = 0; m < dim-1; ++m) {
+            if(nind[dimTotal-2-m]==dimTotal-1)
+              xResult[m + s * dim]=y[s]
+            else
+              xResult[m + s * dim] = x[nind[dimTotal-2-m] + s * dimTotal];
+          }
+
+    return xyResult;
+
+}
+*/
+
+
+double* chooseVarRes(double* x,int yind, int dimTotal,int nsample, int dim){
+    int  nind[dimTotal];
+    int ktmp;
+    double xResult[dim*nsample];
+    if(dim < dimTotal-1) return NULL;
+    
+    for (int s = 0; s < dimTotal; ++s) nind[s] = s; 
+    swapInt(nind[yind], nind[last]);
+    last = dimTotal - 2;
+
+    for (int m = 0; m < dim; ++m) {
+        ktmp = (int) (unif_rand() * (last+1));
+        k = nind[ktmp];
+        swapInt(nind[ktmp], nind[last]);
+        last--;
+      }
+
+    for(int s = 0; s<nsample; s++)  
+        for(int m = 0; m < dim; ++m) {
+              xResult[m + s * dim] = x[nind[dimTotal-2-m] + s * dimTotal];
+          }
+
+    return xResult;
+
+}
+
+
+void regRFMultiResponse(double *x, int *xdim, int *sampsize,
      int *nthsize, int *nrnodes, int *nTree, int *mtry, int *imp,
      int *cat, int *maxcat, int *jprint, int *doProx, int *oobprox,
-           int *biasCorr, double *yptr, double *errimp, double *impmat,
+           int *biasCorr, double *yptrmtx, double *errimp, double *impmat,
            double *impSD, double *prox, int *treeSize, int *nodestatus,
            int *lDaughter, int *rDaughter, double *avnode, int *mbest,
            double *upper, double *mse, int *keepf, int *replace,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
-           int *nout, int *inbag) {
-  
-    int *noutmtx;
-  double *yptrmtx;
+           int *nout, int *inbag, int *subdim, int* dimSampleCount ) {
+
+
   int nsample = xdim[0];
   int mdim = xdim[1];
   zeroDouble(yptrmtx, nsample * mdim);
-    zeroInt(noutmtx, nsample * mdim);
-    
+  double xSelected[nsample*mdim], ySelected[nsample], yptr[nsample];
 
-   regRF(x, y, xdim, sampsize,
-     nthsize, nrnodes, nTree,mtry, imp,
-     cat,maxcat, jprint, doProx,oobprox,
-           biasCorr, yptr, errimp, impmat,
-          impSD, prox, treeSize,nodestatus,
-           lDaughter, rDaughter, avnode, mbest,
-          upper, mse, keepf, replace,
-           testdat, xts, nts,yts, labelts,
-           yTestPred, proxts, msets, coef,
-           nout, inbag);
+  int xdimSelected[2]={nsample,(*subsim) };
+  double* yptrsTmp[*dimSampleCount];
+  double yptr[nsample];
+
+  for(int i=0; i<*dimSampleCount; i++)  yptrsTmp[i]=0;
+
+
+  /*select random variables as predictors and response variable. */
+  for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
+
+      int* noutAll = (int*)calloc(nsample, sizeof(int));
+      for(int k=0; k<nsample;k++)
+            ySelected[k]=x[k][i];
+
+      for(int j=0; j< *dimSampleCount;j++){// for each choice of y, randomly select dimSampleCount combinations of x
+
+            xSelected=chooseVarRes(x,i,mdim,nsample, *subdim);
+            if(xSelected==NULL){
+                 Rprintf("Not a valid subdim!")
+                 return;
+            }
+
+          
+            //call refRF for one choice of x and y
+           regRF(xSelected, ySelected, xdimSelected, sampsize,
+             nthsize, nrnodes, nTree,mtry, imp,
+             cat,maxcat, jprint, doProx,oobprox,
+                   biasCorr, yptr, errimp, impmat,
+                  impSD, prox, treeSize,nodestatus,
+                   lDaughter, rDaughter, avnode, mbest,
+                  upper, mse, keepf, replace,
+                   testdat, xts, nts,yts, labelts,
+                   yTestPred, proxts, msets, coef,
+                   nout, inbag);
+           if(yptrsTmp[j]==NULL)  yptrsTmp[j]=yptr;
+           else {
+                 for(int s=0; s<nsample; s++){
+                            yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]);
+                            noutAll[s]+=nout[s];
+                  }
+
+               }
+   }
+ }
+
+ //reformat yptrsTmp to yptrmtx
+  for(int s=0; s<nsample; s++)
+     for(int m=0; m<mdim; m++)
+       yptrmtx[m+s*nsample]=yptrsTmp[m][s];
+
+   return yptrmtx;
+   
 
 }
 
@@ -190,6 +297,13 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
 		idx = keepF ? j * *nrnodes : 0;
 		zeroInt(in, nsample);
         zeroInt(varUsed, mdim);
+
+
+
+
+
+
+
         /* Draw a random sample for growing a tree. */
 		if (*replace) { /* sampling with replacement */
 			for (n = 0; n < *sampsize; ++n) {
