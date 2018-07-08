@@ -147,7 +147,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                    testdat, xts, nts,yts, labelts,
                    yTestPred, proxts, msets, coef,
                    nout, inbag);
-           if(yptrsTmp[j]==NULL)  yptrsTmp[j]=yptr;
+           if(yptrsTmp[i]==NULL)  yptrsTmp[i]=yptr;
            else {
                  for(int s=0; s<nsample; s++){
                             yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]);
