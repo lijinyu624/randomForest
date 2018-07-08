@@ -39,7 +39,14 @@ void regRF_wrapper(double *x, double *y, int *xdim, int *sampsize,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
            int *nout, int *inbag) {
-
+  
+    int *noutmtx;
+  double *yptrmtx;
+  int nsample = xdim[0];
+  int mdim = xdim[1];
+  zeroDouble(yptrmtx, nsample * mdim);
+    zeroInt(noutmtx, nsample * mdim);
+    
 
    regRF(x, y, xdim, sampsize,
      nthsize, nrnodes, nTree,mtry, imp,
