@@ -96,7 +96,7 @@ double* chooseVarRes(double* x,int yind, int dimTotal,int nsample, int dim){
 }
 
 
-void regRFMultiResponse(double *x, int *xdim, int *sampsize,
+void regRFMultiRes(double *x, int *xdim, int *sampsize,
      int *nthsize, int *nrnodes, int *nTree, int *mtry, int *imp,
      int *cat, int *maxcat, int *jprint, int *doProx, int *oobprox,
            int *biasCorr, double *yptrmtx, double *errimp, double *impmat,
