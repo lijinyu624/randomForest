@@ -69,16 +69,16 @@ double** chooseVariableResponse(double* x,double* y, int dimTotal,int nsample, i
 */
 
 
-double* chooseVarRes(double x[],int yind, int dimTotal,int nsample, int dim){
+double* chooseVarRes(double* x,int yind, int dimTotal,int nsample, int dim){
     int  nind[dimTotal];
     int ktmp;
-    double xResult[dim*nsample];
+    double* xResult =(double*)calloc(dim*nsample,sizeof(double));
 
     if(dim < dimTotal-1) return NULL;
     
     for (int s = 0; s < dimTotal; ++s) nind[s] = s; 
     swapInt(nind[yind], nind[dimTotal-1]);
-     last = dimTotal - 2;
+    int last = dimTotal - 2;
 
     for (int m = 0; m < dim; ++m) {
         ktmp = (int) (unif_rand() * (last+1));
@@ -111,9 +111,9 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   int nsample = xdim[0];
   int mdim = xdim[1];
   zeroDouble(yptrmtx, nsample * mdim);
-  double xSelected[nsample*mdim], ySelected[nsample], yptr[nsample];
+  double  ySelected[nsample], yptr[nsample];
 
-  int xdimSelected[2]={nsample,(*subsim) };
+  int xdimSelected[2]={nsample,*subdim };
   double* yptrsTmp[*dimSampleCount];
 
 
@@ -129,7 +129,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
 
       for(int j=0; j< *dimSampleCount;j++){// for each choice of y, randomly select dimSampleCount combinations of x
 
-            xSelected=chooseVarRes(x,i,mdim,nsample, *subdim);
+            double* xSelected=chooseVarRes(x,i,mdim,nsample, *subdim);
             if(xSelected==NULL){
                  Rprintf("Not a valid subdim!");
                  return;
