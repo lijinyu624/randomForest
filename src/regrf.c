@@ -74,7 +74,7 @@ double* chooseVarRes(double* x,int yind, int dimTotal,int nsample, int dim){
     int ktmp;
     double* xResult =(double*)calloc(dim*nsample,sizeof(double));
 
-    if(dim < dimTotal-1) return NULL;
+    if(dim > dimTotal-1) return NULL;
     
     for (int s = 0; s < dimTotal; ++s) nind[s] = s; 
     swapInt(nind[yind], nind[dimTotal-1]);
