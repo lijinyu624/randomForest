@@ -18,6 +18,44 @@
 void simpleLinReg(int nsample, double *x, double *y, double *coef,
 		  double *mse, int *hasPred);
 
+void regRF(double *x, double *y, int *xdim, int *sampsize,
+     int *nthsize, int *nrnodes, int *nTree, int *mtry, int *imp,
+     int *cat, int *maxcat, int *jprint, int *doProx, int *oobprox,
+           int *biasCorr, double *yptr, double *errimp, double *impmat,
+           double *impSD, double *prox, int *treeSize, int *nodestatus,
+           int *lDaughter, int *rDaughter, double *avnode, int *mbest,
+           double *upper, double *mse, int *keepf, int *replace,
+           int *testdat, double *xts, int *nts, double *yts, int *labelts,
+           double *yTestPred, double *proxts, double *msets, double *coef,
+           int *nout, int *inbag) 
+
+void regRF_wrapper(double *x, double *y, int *xdim, int *sampsize,
+     int *nthsize, int *nrnodes, int *nTree, int *mtry, int *imp,
+     int *cat, int *maxcat, int *jprint, int *doProx, int *oobprox,
+           int *biasCorr, double *yptr, double *errimp, double *impmat,
+           double *impSD, double *prox, int *treeSize, int *nodestatus,
+           int *lDaughter, int *rDaughter, double *avnode, int *mbest,
+           double *upper, double *mse, int *keepf, int *replace,
+           int *testdat, double *xts, int *nts, double *yts, int *labelts,
+           double *yTestPred, double *proxts, double *msets, double *coef,
+           int *nout, int *inbag) {
+
+
+   regRF(x, y, xdim, sampsize,
+     nthsize, nrnodes, nTree,mtry, *imp,
+     cat,maxcat, jprint, doProx,oobprox,
+           biasCorr, yptr, errimp, impmat,
+          impSD, prox, treeSize,nodestatus,
+           lDaughter, rDaughter, avnode, mbest,
+          upper, mse, keepf, replace,
+           testdat, xts, nts,yts, labelts,
+           yTestPred, proxts, msets, *coef,
+           nout, inbag)
+
+}
+
+
+
 
 void regRF(double *x, double *y, int *xdim, int *sampsize,
 	   int *nthsize, int *nrnodes, int *nTree, int *mtry, int *imp,
