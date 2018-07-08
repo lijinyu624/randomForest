@@ -42,14 +42,14 @@ void regRF_wrapper(double *x, double *y, int *xdim, int *sampsize,
 
 
    regRF(x, y, xdim, sampsize,
-     nthsize, nrnodes, nTree,mtry, *imp,
+     nthsize, nrnodes, nTree,mtry, imp,
      cat,maxcat, jprint, doProx,oobprox,
            biasCorr, yptr, errimp, impmat,
           impSD, prox, treeSize,nodestatus,
            lDaughter, rDaughter, avnode, mbest,
           upper, mse, keepf, replace,
            testdat, xts, nts,yts, labelts,
-           yTestPred, proxts, msets, *coef,
+           yTestPred, proxts, msets, coef,
            nout, inbag);
 
 }
