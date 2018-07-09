@@ -162,7 +162,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
  //reformat yptrsTmp to yptrmtx
   for(int s=0; s<nsample; s++)
      for(int m=0; m<mdim; m++)
-       yptrmtx[m+s*mdim]=yptrsTmp[m][s];
+       yptrmtx[m+s*mdim]=0;//yptrsTmp[m][s];
  
 }
 
