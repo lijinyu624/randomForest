@@ -127,7 +127,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
       zeroInt(noutAll,nsample);
 
       for(int k=0; k<nsample;k++)
-            ySelected[k]=x[i+k*nsample];
+            ySelected[k]=x[i+k*mdim];
 
       for(int j=0; j< *dimSampleCount;j++){// for each choice of y, randomly select dimSampleCount combinations of x
 
@@ -162,7 +162,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
  //reformat yptrsTmp to yptrmtx
   for(int s=0; s<nsample; s++)
      for(int m=0; m<mdim; m++)
-       yptrmtx[m+s*nsample]=0;//yptrsTmp[m][s];
+       yptrmtx[m+s*mdim]=yptrsTmp[m][s];
  
 }
 
