@@ -135,25 +135,27 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                  Rprintf("Not a valid subdim!");
                  return;
             }
+                //call k times of refRF for one choice of x and y 
+            for(int k=0; k<20; k++){       
+                       
+                       regRF(xSelected, ySelected, xdimSelected, sampsize,
+                         nthsize, nrnodes, nTree,mtry, imp,
+                         cat,maxcat, jprint, doProx,oobprox,
+                               biasCorr, yptr, errimp, impmat,
+                              impSD, prox, treeSize,nodestatus,
+                               lDaughter, rDaughter, avnode, mbest,
+                              upper, mse, keepf, replace,
+                               testdat, xts, nts,yts, labelts,
+                               yTestPred, proxts, msets, coef,
+                               nout, inbag);
+                       if(yptrsTmp[i]==NULL)  yptrsTmp[i]=yptr;
+                       else 
+                             for(int s=0; s<nsample; s++)
+                                        yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]+.1);                 
+                      for(int s=0; s<nsample; s++)                 
+                        noutAll[s]+=nout[s];
+           }
 
-          
-            //call refRF for one choice of x and y
-           regRF(xSelected, ySelected, xdimSelected, sampsize,
-             nthsize, nrnodes, nTree,mtry, imp,
-             cat,maxcat, jprint, doProx,oobprox,
-                   biasCorr, yptr, errimp, impmat,
-                  impSD, prox, treeSize,nodestatus,
-                   lDaughter, rDaughter, avnode, mbest,
-                  upper, mse, keepf, replace,
-                   testdat, xts, nts,yts, labelts,
-                   yTestPred, proxts, msets, coef,
-                   nout, inbag);
-           if(yptrsTmp[i]==NULL)  yptrsTmp[i]=yptr;
-           else 
-                 for(int s=0; s<nsample; s++)
-                            yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]);                 
-          for(int s=0; s<nsample; s++)                 
-            noutAll[s]+=nout[s];
    }
  }
 
