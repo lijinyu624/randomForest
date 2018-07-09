@@ -136,7 +136,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                  return;
             }
                 //call k times of refRF for one choice of x and y 
-            for(int k=0; k<1; k++){       
+            //for(int k=0; k<1; k++){       
                        
                        regRF(xSelected, ySelected, xdimSelected, sampsize,
                          nthsize, nrnodes, nTree,mtry, imp,
@@ -153,7 +153,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                                 yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]+.1);                 
                       for(int s=0; s<nsample; s++)                 
                         noutAll[s]+=nout[s];
-           }
+           //}
 
    }
  }
