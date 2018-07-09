@@ -115,9 +115,6 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   double yptr[nsample];
   int xdimSelected[2]={nsample,*subdim };
   double* yptrsTmp[mdim];
-
-
-
   /*select random variables as predictors and response variable. */
   for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
 
