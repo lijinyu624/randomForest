@@ -410,7 +410,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     matrix(integer(n * ntree), n) else integer(1),
                     subdim=as.integer(subdim),
                     dimSampleCount=as.integer(dimSampleCount), 
-                    yprtmtx= double(n*p),
+                    yptrmtx= double(n*p),
 
                     DUP=FALSE,
                     PACKAGE="randomForest")[c(16:28, 36:41)]
@@ -440,7 +440,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
         out <- list(call = cl,
                     type = "regression",
                     predicted = structure(ypred + ymean, names=x.row.names),
-                    pred= rfout$mse,
+                    pred= rfout$yptrmtx,
                     mse = rfout$mse,
                     rsq = 1 - rfout$mse / (var(y) * (n-1) / n),
                     oob.times = rfout$oob.times,
