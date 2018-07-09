@@ -365,7 +365,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
 		ymean <- mean(y)
 		y <- y - ymean
 		ytest <- ytest - ymean
-        rfout <- .C("regRFMultiRes",
+        rfout <- .Call("regRFMultiRes",
                     x,
                     #as.double(y),
                     as.integer(c(n, p)),
