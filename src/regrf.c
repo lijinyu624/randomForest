@@ -102,13 +102,13 @@ double* chooseVarRes(double* x,int yind, int dimTotal,int nsample, int dim,doubl
 void regRFMultiRes(double *x, int *xdim, int *sampsize,
      int *nthsize, int *nrnodes, int *nTree, int *mtry, int *imp,
      int *cat, int *maxcat, int *jprint, int *doProx, int *oobprox,
-           int *biasCorr, double *yptrmtx, double *errimp, double *impmat,
+           int *biasCorr, double *yptrs, double *errimp, double *impmat,
            double *impSD, double *prox, int *treeSize, int *nodestatus,
            int *lDaughter, int *rDaughter, double *avnode, int *mbest,
            double *upper, double *mse, int *keepf, int *replace,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
-           int *nout, int *inbag, int *subdim, int* dimSampleCount ) {
+           int *nout, int *inbag, int *subdim, int* dimSampleCount, double* yptrmtx ) {
 
 
   int nsample = xdim[0];
