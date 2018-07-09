@@ -69,11 +69,14 @@ double** chooseVariableResponse(double* x,double* y, int dimTotal,int nsample, i
 */
 
 
+
+     
+
 double* chooseVarRes(double* x,int yind, int dimTotal,int nsample, int dim){
     int  nind[dimTotal];
     int ktmp;
-    double* xResult =(double*)calloc(dim*nsample,sizeof(double));
 
+    double* xResult =(double*)calloc(dim*nsample,sizeof(double));
     if(dim > dimTotal-1) return NULL;
     
     for (int s = 0; s < dimTotal; ++s) nind[s] = s; 
@@ -115,12 +118,13 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   double yptr[nsample];
   int xdimSelected[2]={nsample,*subdim };
   double* yptrsTmp[mdim];
-  int* noutAll;
+  int* noutAll=(int*)calloc(nsample, sizeof(int));
   /*select random variables as predictors and response variable. */
   for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
 
-      noutAll = (int*)calloc(nsample, sizeof(int));
       yptrsTmp[i]=(double*)calloc(nsample,sizeof(double));
+      
+      zeroInt(noutAll,nsample);
 
       for(int k=0; k<nsample;k++)
             ySelected[k]=x[i+k*nsample];
@@ -151,6 +155,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                               }*/
                        
            }
+           free(xSelected);
    }
  }
 
