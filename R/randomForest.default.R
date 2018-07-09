@@ -12,7 +12,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
              importance=FALSE, localImp=FALSE, nPerm=1,
              proximity, oob.prox=proximity,
              norm.votes=TRUE, do.trace=FALSE,
-             keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
+             keep.forest=!is.null(y) && !is.null(xtest), corr.bias=FALSE,
              keep.inbag=FALSE, subdim=3, dimSampleCount=10, ...) {
     addclass <- is.null(y)
     classRF <- addclass || is.factor(y)
