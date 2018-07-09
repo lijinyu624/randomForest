@@ -113,7 +113,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
 
   int nsample = xdim[0];
   int mdim = xdim[1];
-  zeroDouble(yptrmtx, nsample * mdim);
+
   double  ySelected[nsample];
   double yptr[nsample];
   int xdimSelected[2]={nsample,*subdim };
