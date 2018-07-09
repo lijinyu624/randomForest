@@ -145,10 +145,10 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                                testdat, xts, nts,yts, labelts,
                                yTestPred, proxts, msets, coef,
                                nout, inbag);
-                      //for(int s=0; s<nsample; s++)
-                        //        yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]+.1);                                 
-                          //      noutAll[s]+=nout[s];
-                          //yptrsTmp[i]=yptr;
+                      for(int s=0; s<nsample; s++)
+                               yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]+.1);                                 
+                                noutAll[s]+=nout[s];
+                       
            }
    }
  }
