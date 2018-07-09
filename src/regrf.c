@@ -119,7 +119,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
 
       int* noutAll = (int*)calloc(nsample, sizeof(int));
-      double yptrsTmp[i]=(double*)calloc(nsample,sizeof(double));
+      yptrsTmp[i]=(double*)calloc(nsample,sizeof(double));
 
       for(int k=0; k<nsample;k++)
             ySelected[k]=x[i+k*nsample];
