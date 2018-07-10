@@ -118,22 +118,22 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   int mdim = xdim[1];
 
 
-    yb         = (double *) S_alloc(*sampsize, sizeof(double));
-    xb         = (double *) S_alloc(mdim * *sampsize, sizeof(double));
-    ytr        = (double *) S_alloc(nsample, sizeof(double));
-    xtmp       = (double *) S_alloc(nsample, sizeof(double));
-    resOOB     = (double *) S_alloc(nsample, sizeof(double));
+   double * yb         = (double *) S_alloc(*sampsize, sizeof(double));
+    double *xb         = (double *) S_alloc(mdim * *sampsize, sizeof(double));
+    double *ytr        = (double *) S_alloc(nsample, sizeof(double));
+    double *xtmp       = (double *) S_alloc(nsample, sizeof(double));
+   double * resOOB     = (double *) S_alloc(nsample, sizeof(double));
 
-    in        = (int *) S_alloc(nsample, sizeof(int));
-    nodex      = (int *) S_alloc(nsample, sizeof(int));
-    varUsed    = (int *) S_alloc(mdim, sizeof(int));
-    nind = *replace ? NULL : (int *) S_alloc(nsample, sizeof(int));
+    int * in        = (int *) S_alloc(nsample, sizeof(int));
+    int *nodex      = (int *) S_alloc(nsample, sizeof(int));
+    int *varUsed    = (int *) S_alloc(mdim, sizeof(int));
+    int *nind = *replace ? NULL : (int *) S_alloc(nsample, sizeof(int));
 
     if (*testdat) {
-  ytree      = (double *) S_alloc(*nts, sizeof(double));
-  nodexts    = (int *) S_alloc(*nts, sizeof(int));
+  double *ytree      = (double *) S_alloc(*nts, sizeof(double));
+  int *nodexts    = (int *) S_alloc(*nts, sizeof(int));
     }
-    oobpair = (*doProx && *oobprox) ?
+    int *oobpair = (*doProx && *oobprox) ?
   (int *) S_alloc(nsample * nsample, sizeof(int)) : NULL;
 
 
