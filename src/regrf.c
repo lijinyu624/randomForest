@@ -118,13 +118,13 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   double yptr[nsample];
   int xdimSelected[2]={nsample,*subdim };
   double* yptrsTmp[mdim];
-  int* noutAll=(int*)calloc(nsample, sizeof(int));
-   double* xSelected =(double*)calloc(mdim*nsample,sizeof(double));
+  int* noutAll=(int*)S_alloc(nsample, sizeof(int));
+   double* xSelected =(double*)S_alloc(mdim*nsample,sizeof(double));
    //zeroDouble(yptrmtx,nsample*mdim);
   /*select random variables as predictors and response variable. */
   for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
 
-      yptrsTmp[i]=(double*)calloc(nsample,sizeof(double));
+      yptrsTmp[i]=(double*)S_alloc(nsample,sizeof(double));
       
       zeroInt(noutAll,nsample);
 
