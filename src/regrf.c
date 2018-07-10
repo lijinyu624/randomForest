@@ -232,15 +232,15 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
   *************************************************************************/
 
     double errts = 0.0, averrb, meanY, meanYts, varY, varYts, r, xrand,
-	errb = 0.0, resid=0.0, ooberr, ooberrperm, delta, *resOOB;
+	errb = 0.0, resid=0.0, ooberr, ooberrperm, delta, ;
 
-    double *yb, *xtmp, *xb, *ytr, *ytree, *tgini;
+    double   *tgini;
 
     int k, m, mr, n, nOOB, j, jout, idx, ntest, last, ktmp, nPerm,
         nsample, mdim, keepF, keepInbag;
-    int *oobpair, varImp, localImp, *varUsed;
+    int  varImp, localImp;
 
-    int *in, *nind, *nodex, *nodexts;
+  
 
     nsample = xdim[0];
     mdim = xdim[1];
