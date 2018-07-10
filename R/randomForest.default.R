@@ -413,7 +413,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     yptrmtx= matrix(double(n * p), ncol=p),
 
                     DUP=FALSE,
-                    PACKAGE="randomForest")[c(16:28, 36:41)]
+                    PACKAGE="randomForest")[c(16:28, 36:43)]
         ## Format the forest component, if present.
         if (keep.forest) {
             max.nodes <- max(rfout$ndbigtree)
