@@ -117,14 +117,14 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   double  ySelected[nsample];
   double yptr[nsample];
   int xdimSelected[2]={nsample,*subdim };
-  double* yptrsTmp[mdim];
+  //double* yptrsTmp[mdim];
   int* noutAll=(int*)S_alloc(nsample, sizeof(int));
    double* xSelected =(double*)S_alloc(*subdim*nsample,sizeof(double));
    //zeroDouble(yptrmtx,nsample*mdim);
   /*select random variables as predictors and response variable. */
   for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
 
-      yptrsTmp[i]=(double*)S_alloc(nsample,sizeof(double));
+      //yptrsTmp[i]=(double*)S_alloc(nsample,sizeof(double));
       
       zeroInt(noutAll,nsample);
 
@@ -138,8 +138,8 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                  Rprintf("Not a valid subdim!");
                  return;
             }
-                //call k times of refRF for one choice of x and y 
-                  /*     
+                
+                       
                        regRF(xSelected, ySelected, xdimSelected, sampsize,
                          nthsize, nrnodes, nTree,mtry, imp,
                          cat,maxcat, jprint, doProx,oobprox,
@@ -150,9 +150,10 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                                testdat, xts, nts,yts, labelts,
                                yTestPred, proxts, msets, coef,
                                nout, inbag);
-                    */
+                    
                     for(int s=0; s<nsample; s++){
-                               yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]+.1);                                 
+                              // yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]+.1);  
+                              yptrsTmp[s][i]=(yptr[s]*nout[s]+ yptrsTmp[s][i]*noutAll[s])/(noutAll[s]+nout[s]+.1);                                
                                noutAll[s]+=nout[s];
                               }
                        
@@ -164,7 +165,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
  //reformat yptrsTmp to yptrmtx
   for(int s=0; s<nsample; s++)
      for(int m=0; m<mdim; m++){
-        yptrmtx[m+s*mdim]=yptrsTmp[m][s];
+        //yptrmtx[m+s*mdim]=yptrsTmp[m][s];
         printf("%f,",yptrmtx[m+s*mdim]);
      }
 }
