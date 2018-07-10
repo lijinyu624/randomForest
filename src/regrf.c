@@ -14,6 +14,7 @@
 
 #include <R.h>
 #include "rf.h"
+#include <Rinternals.h>
 
 void simpleLinReg(int nsample, double *x, double *y, double *coef,
 		  double *mse, int *hasPred);
@@ -107,18 +108,44 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
            double *upper, double *mse, int *keepf, int *replace,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
-           int *nout, int *inbag, int *subdim, int* dimSampleCount, double* yptrmtx ,double* xSelected) {
+           int *nout, int *inbag, int *subdim, int* dimSampleCount, double* yptrmtx, 
+           double* yb, double* xb,double* ytr, double*xtmp,
+           double * resOOB, int* in, int* nodex, int * varUsed, int* nind, double * ytree, int* nodexts, int* oobpair
 
+           ) {
 
   int nsample = xdim[0];
   int mdim = xdim[1];
 
+
+    yb         = (double *) S_alloc(*sampsize, sizeof(double));
+    xb         = (double *) S_alloc(mdim * *sampsize, sizeof(double));
+    ytr        = (double *) S_alloc(nsample, sizeof(double));
+    xtmp       = (double *) S_alloc(nsample, sizeof(double));
+    resOOB     = (double *) S_alloc(nsample, sizeof(double));
+
+    in        = (int *) S_alloc(nsample, sizeof(int));
+    nodex      = (int *) S_alloc(nsample, sizeof(int));
+    varUsed    = (int *) S_alloc(mdim, sizeof(int));
+    nind = *replace ? NULL : (int *) S_alloc(nsample, sizeof(int));
+
+    if (*testdat) {
+  ytree      = (double *) S_alloc(*nts, sizeof(double));
+  nodexts    = (int *) S_alloc(*nts, sizeof(int));
+    }
+    oobpair = (*doProx && *oobprox) ?
+  (int *) S_alloc(nsample * nsample, sizeof(int)) : NULL;
+
+
+
+
+
   double  ySelected[nsample];
-  double yptr[nsample];
+  //double yptr[nsample];
   int xdimSelected[2]={nsample,*subdim };
   //double* yptrsTmp[mdim];
   int noutAll[nsample];
-   //double* xSelected =(double*)S_alloc(*subdim*nsample,sizeof(double));
+  double* xSelected =(double*)S_alloc(*subdim*nsample,sizeof(double));
    //zeroDouble(yptrmtx,nsample*mdim);
   /*select random variables as predictors and response variable. */
   for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
@@ -180,7 +207,10 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
            double *upper, double *mse, int *keepf, int *replace,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
-           int *nout, int *inbag) {
+           int *nout, int *inbag, double* yb, double* xb,double* ytr, double*xtmp,
+           double * resOOB, int* in, int* nodex, int * varUsed, int* nind, double * ytree, int* nodexts, int* oobpair)
+
+            {
     /*************************************************************************
    Input:
    mdim=number of variables in data set
@@ -223,23 +253,7 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
 
     if (*jprint == 0) *jprint = *nTree + 1;
 
-    yb         = (double *) S_alloc(*sampsize, sizeof(double));
-    xb         = (double *) S_alloc(mdim * *sampsize, sizeof(double));
-    ytr        = (double *) S_alloc(nsample, sizeof(double));
-    xtmp       = (double *) S_alloc(nsample, sizeof(double));
-    resOOB     = (double *) S_alloc(nsample, sizeof(double));
 
-    in        = (int *) S_alloc(nsample, sizeof(int));
-    nodex      = (int *) S_alloc(nsample, sizeof(int));
-    varUsed    = (int *) S_alloc(mdim, sizeof(int));
-    nind = *replace ? NULL : (int *) S_alloc(nsample, sizeof(int));
-
-    if (*testdat) {
-	ytree      = (double *) S_alloc(ntest, sizeof(double));
-	nodexts    = (int *) S_alloc(ntest, sizeof(int));
-    }
-    oobpair = (*doProx && *oobprox) ?
-	(int *) S_alloc(nsample * nsample, sizeof(int)) : NULL;
 
     /* If variable importance is requested, tgini points to the second
        "column" of errimp, otherwise it's just the same as errimp. */
