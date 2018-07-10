@@ -28,7 +28,8 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
            double *upper, double *mse, int *keepf, int *replace,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
-           int *nout, int *inbag);
+           int *nout, int *inbag, double* yb, double* xb,double* ytr, double*xtmp,
+           double * resOOB, int* in, int* nodex, int * varUsed, int* nind, double * ytree, int* nodexts, int* oobpair);
 
 
 //choose a subset of dimesions from xy. dim-1 is the new dimensions of x, that is dim is the total dimensions of x + y
@@ -141,7 +142,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
 
 
   double  ySelected[nsample];
-  //double yptr[nsample];
+  double yptr[nsample];
   int xdimSelected[2]={nsample,*subdim };
   //double* yptrsTmp[mdim];
   int noutAll[nsample];
@@ -208,7 +209,8 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
            int *nout, int *inbag, double* yb, double* xb,double* ytr, double*xtmp,
-           double * resOOB, int* in, int* nodex, int * varUsed, int* nind, double * ytree, int* nodexts, int* oobpair)
+           double * resOOB, int* in, int* nodex, int * varUsed, int* nind, double * ytree, int* nodexts, int* oobpair
+           )
 
             {
     /*************************************************************************
@@ -232,7 +234,7 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
   *************************************************************************/
 
     double errts = 0.0, averrb, meanY, meanYts, varY, varYts, r, xrand,
-	errb = 0.0, resid=0.0, ooberr, ooberrperm, delta, ;
+	errb = 0.0, resid=0.0, ooberr, ooberrperm, delta ;
 
     double   *tgini;
 
