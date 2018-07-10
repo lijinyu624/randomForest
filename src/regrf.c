@@ -109,9 +109,8 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
            double *upper, double *mse, int *keepf, int *replace,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
-           int *nout, int *inbag, int *subdim, int* dimSampleCount, double* yptrmtx, 
-           double* yb, double* xb,double* ytr, double*xtmp,
-           double * resOOB, int* in, int* nodex, int * varUsed, int* nind, double * ytree, int* nodexts, int* oobpair
+           int *nout, int *inbag, int *subdim, int* dimSampleCount, double* yptrmtx
+          
 
            ) {
 
@@ -176,7 +175,8 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                               upper, mse, keepf, replace,
                                testdat, xts, nts,yts, labelts,
                                yTestPred, proxts, msets, coef,
-                               nout, inbag);
+                               nout, inbag,  yb,  xb,ytr, xtmp,
+                              resOOB,  in,  nodex,  varUsed, nind,  ytree, nodexts, oobpair);
                     
                     for(int s=0; s<nsample; s++){
                               // yptrsTmp[i][s]=(yptr[s]*nout[s]+ yptrsTmp[i][s]*noutAll[s])/(noutAll[s]+nout[s]+.1);  
