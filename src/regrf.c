@@ -72,12 +72,12 @@ double** chooseVariableResponse(double* x,double* y, int dimTotal,int nsample, i
 
      
 
-double* chooseVarRes(double* x,int yind, int dimTotal,int nsample, int dim,double* xResult){
+void* chooseVar(double* x,int yind, int dimTotal,int nsample, int dim,double* xResult){
     int  nind[dimTotal];
     int ktmp;
 
    
-    if(dim > dimTotal-1) return NULL;
+  
     
     for (int s = 0; s < dimTotal; ++s) nind[s] = s; 
     swapInt(nind[yind], nind[dimTotal-1]);
@@ -94,7 +94,6 @@ double* chooseVarRes(double* x,int yind, int dimTotal,int nsample, int dim,doubl
               xResult[m + s * dim] = x[nind[dimTotal-2-m] + s * dimTotal];
           }
 
-    return xResult;
 
 }
 
@@ -108,7 +107,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
            double *upper, double *mse, int *keepf, int *replace,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
-           int *nout, int *inbag, int *subdim, int* dimSampleCount, double* yptrmtx ) {
+           int *nout, int *inbag, int *subdim, int* dimSampleCount, double* yptrmtx ,double* xSelected) {
 
 
   int nsample = xdim[0];
@@ -118,8 +117,8 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   double yptr[nsample];
   int xdimSelected[2]={nsample,*subdim };
   //double* yptrsTmp[mdim];
-  int* noutAll=(int*)S_alloc(nsample, sizeof(int));
-   double* xSelected =(double*)S_alloc(*subdim*nsample,sizeof(double));
+  int noutAll[nsample];
+   //double* xSelected =(double*)S_alloc(*subdim*nsample,sizeof(double));
    //zeroDouble(yptrmtx,nsample*mdim);
   /*select random variables as predictors and response variable. */
   for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
@@ -132,13 +131,13 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
             ySelected[k]=x[i+k*mdim];
 
       for(int j=0; j< *dimSampleCount;j++){// for each choice of y, randomly select dimSampleCount combinations of x
-
-            chooseVarRes(x,i,mdim,nsample, *subdim, xSelected);
-            if(xSelected==NULL){
-                 Rprintf("Not a valid subdim!");
-                 return;
-            }
+             if(*subdim > mdim-1) {
+                       Rprintf("Not a valid subdim!");
+                       return;
+                  }
                 
+                  chooseVar(x,i,mdim,nsample, *subdim, xSelected);
+      
                        
                        regRF(xSelected, ySelected, xdimSelected, sampsize,
                          nthsize, nrnodes, nTree,mtry, imp,
