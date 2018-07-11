@@ -74,7 +74,7 @@ double** chooseVariableResponse(double* x,double* y, int dimTotal,int nsample, i
 
      
 
-void* chooseVar(double* x,int yind, int dimTotal,int nsample, int dim,double* xResult){
+void chooseVar(double* x,int yind, int dimTotal,int nsample, int dim,double* xResult){
     int  nind[dimTotal];
     int ktmp;
 
@@ -243,6 +243,7 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
 
   
 
+   Rprint("%d\n",1);
     nsample = xdim[0];
     mdim = xdim[1];
     ntest = *nts;
@@ -312,7 +313,6 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
 		idx = keepF ? j * *nrnodes : 0;
 		zeroInt(in, nsample);
         zeroInt(varUsed, mdim);
-	Rprint("j:%d\n",j);
 
 
         /* Draw a random sample for growing a tree. */
