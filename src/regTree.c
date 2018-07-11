@@ -182,7 +182,7 @@ void findBestSplit(double *x, int *jdex, double *y, int mdim, int nsample,
     ncase = (int *) Calloc(nsample, int);
     zeroDouble(avcat, MAX_CAT);
     zeroDouble(tavcat, MAX_CAT);
-  Rprintf("mdim:%d":mdim);
+  Rprintf("mdim:%d",mdim);
     /* START BIG LOOP */
     *msplit = -1;
     *decsplit = 0.0;
