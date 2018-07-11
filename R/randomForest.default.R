@@ -372,7 +372,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     as.integer(sampsize),
                     as.integer(nodesize),
                     as.integer(nrnodes),
-                    as.integer(ntree),
+                    as.integer(1),
                     as.integer(mtry),
                     as.integer(c(importance, localImp, nPerm)),
                     as.integer(ncat),
