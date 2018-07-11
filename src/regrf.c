@@ -152,7 +152,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
    //zeroDouble(yptrmtx,nsample*mdim);
   /*select random variables as predictors and response variable. */
   for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
-	//Rprintf("i:%d\n", i);
+      Rprintf("dimension: %d\n", i);
       //yptrsTmp[i]=(double*)S_alloc(nsample,sizeof(double));
       
       //zeroInt(noutAll,nsample);
