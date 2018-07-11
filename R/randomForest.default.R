@@ -2,9 +2,9 @@
 mylevels <- function(x) if (is.factor(x)) levels(x) else 0
 
 "randomForest.default" <-
-    function(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=500,
+    function(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=100,
              mtry=if (!is.null(y) && !is.factor(y))
-             max(floor(ncol(x)/3), 1) else floor(sqrt(ncol(x))),
+             max(floor(subdim/3), 1) else floor(sqrt(subdim)),
              replace=TRUE, classwt=NULL, cutoff, strata,
              sampsize = if (replace) nrow(x) else ceiling(.632*nrow(x)),
              nodesize = if (!is.null(y) && !is.factor(y)) 5 else 1,
@@ -13,7 +13,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
              proximity, oob.prox=proximity,
              norm.votes=TRUE, do.trace=FALSE,
              keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
-             keep.inbag=FALSE, subdim=3, dimSampleCount=10, ...) {
+             keep.inbag=FALSE, subdim=floor(ncol(x)/2), dimSampleCount=10, ...) {
     addclass <- is.null(y)
     classRF <- addclass || is.factor(y)
     if (!classRF && length(unique(y)) <= 5) {
