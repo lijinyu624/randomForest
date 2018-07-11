@@ -314,7 +314,6 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
         zeroInt(varUsed, mdim);
 
 
-       Rprintf("j:%d\n",j);
         /* Draw a random sample for growing a tree. */
 		if (*replace) { /* sampling with replacement */
 			for (n = 0; n < *sampsize; ++n) {
