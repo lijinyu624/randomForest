@@ -148,7 +148,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
    //zeroDouble(yptrmtx,nsample*mdim);
   /*select random variables as predictors and response variable. */
   for(int i=0; i< mdim; i++ ){// iterate through all possible choices of response y
-	Rprintf("i:%d", i);
+	Rprintf("i:%d\n", i);
       //yptrsTmp[i]=(double*)S_alloc(nsample,sizeof(double));
       
       //zeroInt(noutAll,nsample);
@@ -312,7 +312,7 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
 		idx = keepF ? j * *nrnodes : 0;
 		zeroInt(in, nsample);
         zeroInt(varUsed, mdim);
-
+	Rprint("j:%d\n",j);
 
 
         /* Draw a random sample for growing a tree. */
