@@ -136,7 +136,11 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
     int *oobpair = (*doProx && *oobprox) ?
   (int *) S_alloc(nsample * nsample, sizeof(int)) : NULL;
 
-
+   if(*subdim > mdim-1 || *mtry < mdim) {
+                       Rprintf("Not a valid subdim!");
+                       return;
+                  }
+              
 
 
   double  ySelected[nsample];
@@ -157,11 +161,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
             ySelected[k]=x[i+k*mdim];
 
       for(int j=0; j< *dimSampleCount;j++){// for each choice of y, randomly select dimSampleCount combinations of x
-             if(*subdim > mdim-1) {
-                       Rprintf("Not a valid subdim!");
-                       return;
-                  }
-                
+               
                   chooseVar(x,i,mdim,nsample, *subdim, xSelected);
       
                        
