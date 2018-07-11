@@ -129,13 +129,12 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
     int *varUsed    = (int *) S_alloc(mdim, sizeof(int));
     int *nind = *replace ? NULL : (int *) S_alloc(nsample, sizeof(int));
 
-    if (*testdat) {
-  double *ytree      = (double *) S_alloc(*nts, sizeof(double));
-  int *nodexts    = (int *) S_alloc(*nts, sizeof(int));
-    }
+   
+  double *ytree      = *testdat? (double *) S_alloc(*nts, sizeof(double)):NULL;
+  int *nodexts    = *testdat?(int *) S_alloc(*nts, sizeof(int)):NULL;
+  
     int *oobpair = (*doProx && *oobprox) ?
   (int *) S_alloc(nsample * nsample, sizeof(int)) : NULL;
-
 
 
 
