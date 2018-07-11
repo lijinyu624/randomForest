@@ -151,7 +151,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
 
       //yptrsTmp[i]=(double*)S_alloc(nsample,sizeof(double));
       
-      zeroInt(noutAll,nsample);
+      //zeroInt(noutAll,nsample);
 
       for(int k=0; k<nsample;k++)
             ySelected[k]=x[i+k*mdim];
