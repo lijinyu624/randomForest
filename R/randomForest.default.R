@@ -410,7 +410,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     matrix(integer(n * ntree), n) else integer(1),
                     subdim=as.integer(subdim),
                     dimSampleCount=as.integer(dimSampleCount), 
-                    yptrmtx=double(n*p),     ## matrix(double(n * p), ncol=p),
+                    yptrmtx= matrix(double(n * p), ncol=p),
                     DUP=FALSE,
                     PACKAGE="randomForest")
         ## Format the forest component, if present.
