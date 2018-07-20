@@ -182,7 +182,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   while(true){// iterate for *sampleCount times, each time select a subset of xs and ys
       i++;
       bool needMoreIter=false;
-      for(int s=0; s<nsample; s++)
+      for(int m=0; m<mdim; m++)
       {
         if(yflag[s]=0) {
           needMoreIter=true;
@@ -197,11 +197,11 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
       //yptrsTmp[i]=(double*)S_alloc(nsample,sizeof(double));
       
       //zeroInt(noutAll,nsample);
-      /*
+      
       for(int m=0; m< mdim;m++) ninds[m] = m;
       
       chooseVar(x,i,mdim,nsample, xdimCount, xSelected,ninds);
-      
+      /*
       for(int j=0; j< ydimCount;j++){// select y
                     yflag[ninds[j]]=1; //flag y
                     for(int k=0; k<nsample;k++) ySelected[k]=x[ninds[j]+k*mdim];
