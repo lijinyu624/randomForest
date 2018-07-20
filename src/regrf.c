@@ -178,6 +178,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   /*select random variables as predictors and response variable. */
   
   int i=-1;
+  /*
   while(true){// iterate for *sampleCount times, each time select a subset of xs and ys
       i++;
       bool needMoreIter=false;
@@ -199,7 +200,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
       for(int m=0; m< mdim;m++) ninds[m] = m;
       
       chooseVar(x,i,mdim,nsample, xdimCount, xSelected,ninds);
-      /*
+      
       for(int j=0; j< ydimCount;j++){// select y
                     yflag[ninds[j]]=1; //flag y
                     for(int k=0; k<nsample;k++) ySelected[k]=x[ninds[j]+k*mdim];
@@ -244,7 +245,11 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
         //yptrmtx[m+s*mdim]=yptrsTmp[m][s];
         //printf("%f,",yptrmtx[m+s*mdim]);
      }
-     */
+
+
+*/
+
+
 }
 
 
