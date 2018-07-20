@@ -15,6 +15,7 @@
 #include <R.h>
 #include "rf.h"
 #include <Rinternals.h>
+#include <stdbool.h>
 
 void simpleLinReg(int nsample, double *x, double *y, double *coef,
 		  double *mse, int *hasPred);
@@ -96,7 +97,7 @@ void chooseVar(double* x,int yind, int dimTotal,int nsample, int dim,double* xRe
 }
 
 
-void computeCov(double* err, double* cov, int nsample, int dim ){
+void computeCov(double* err, double* cov, int nsample, int mdim ){
    
     
     for(int m1=0; m1<mdim; m1++)
