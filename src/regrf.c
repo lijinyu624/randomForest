@@ -230,6 +230,9 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
    }*/
  }
 
+
+
+/*
  for(int s=0; s<nsample; s++)
    {
      for(int m=0; m<mdim; m++){
@@ -238,7 +241,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
      }
    }
  computeCov(yptrmtx,cov,nsample,mdim);
-
+*/
  //reformat yptrsTmp to yptrmtx
   for(int s=0; s<nsample; s++)
      for(int m=0; m<mdim; m++){
