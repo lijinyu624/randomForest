@@ -184,7 +184,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
       bool needMoreIter=false;
       for(int m=0; m<mdim; m++)
       {
-        if(yflag[s]==0) {
+        if(yflag[m]==0) {
           needMoreIter=true;
           break;
         }
