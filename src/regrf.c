@@ -197,8 +197,9 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
       //yptrsTmp[i]=(double*)S_alloc(nsample,sizeof(double));
       
       //zeroInt(noutAll,nsample);
-      for(int m=0; m< mdim;m++) ninds[m] = m;
       /*
+      for(int m=0; m< mdim;m++) ninds[m] = m;
+      
       chooseVar(x,i,mdim,nsample, xdimCount, xSelected,ninds);
       
       for(int j=0; j< ydimCount;j++){// select y
@@ -242,12 +243,6 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
    }
  computeCov(yptrmtx,cov,nsample,mdim);
 */
- //reformat yptrsTmp to yptrmtx
-  for(int s=0; s<nsample; s++)
-     for(int m=0; m<mdim; m++){
-        //yptrmtx[m+s*mdim]=yptrsTmp[m][s];
-        //printf("%f,",yptrmtx[m+s*mdim]);
-     }
 
 
 
