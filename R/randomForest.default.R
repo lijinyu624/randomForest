@@ -13,7 +13,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
              proximity, oob.prox=proximity,
              norm.votes=TRUE, do.trace=FALSE,
              keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
-             keep.inbag=FALSE, subdim=floor(ncol(x)/2), dimSampleCount=10, ...) {
+             keep.inbag=FALSE, subdim=floor(ncol(x)/2), sampleCount=100, ...) {
     addclass <- is.null(y)
     classRF <- addclass || is.factor(y)
     if (!classRF && length(unique(y)) <= 5) {
@@ -408,9 +408,11 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     oob.times = integer(n),
                     inbag = if (keep.inbag)
                     matrix(integer(n * ntree), n) else integer(1),
+
                     subdim=as.integer(subdim),
-                    dimSampleCount=as.integer(dimSampleCount), 
+                    sampleCount=as.integer(sampleCount), 
                     yptrmtx= matrix(double(n * p), ncol=p),
+                    cov= matrix(double(p*p), ncol=p),
                     DUP=FALSE,
                     PACKAGE="randomForest")
         ## Format the forest component, if present.
