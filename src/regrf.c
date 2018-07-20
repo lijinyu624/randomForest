@@ -137,9 +137,8 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   int yflag[mdim];
   int xdimCount=*subdim;
   int ydimCount=mdim-xdimCount;
-
   zeroInt(yflag, mdim);
-  
+
 
 
   double * yb        = (double *) S_alloc(*sampsize, sizeof(double));
@@ -173,7 +172,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   //double* yptrsTmp[mdim];
   int noutAll[nsample][mdim];
   double* xSelected =(double*)S_alloc(*subdim*nsample,sizeof(double));
-
+  double* yerr =(double*)S_alloc(mdim*nsample,sizeof(double));
    //zeroDouble(yptrmtx,nsample*mdim);
   /*select random variables as predictors and response variable. */
   
@@ -237,8 +236,8 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
  for(int s=0; s<nsample; s++)
    {
      for(int m=0; m<mdim; m++){
-        yptrmtx[m+s*mdim]-= x[m+s*mdim];
-        yptrmtx[m+s*mdim]=  yptrmtx[m+s*mdim]>0?yptrmtx[m+s*mdim]:-yptrmtx[m+s*mdim];
+        yerr[m+s*mdim]= yptrmtx[m+s*mdim] - x[m+s*mdim];
+        yerr[m+s*mdim]=  yerr[m+s*mdim]>0?yerr[m+s*mdim]:-yerr[m+s*mdim];
      }
    }
  computeCov(yptrmtx,cov,nsample,mdim);
