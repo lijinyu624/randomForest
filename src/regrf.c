@@ -240,7 +240,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
         yerr[m+s*mdim]=  yerr[m+s*mdim]>0?yerr[m+s*mdim]:-yerr[m+s*mdim];
      }
    }
- computeCov(yptrmtx,cov,nsample,mdim);
+ computeCov(yerry,cov,nsample,mdim);
 
 
 
