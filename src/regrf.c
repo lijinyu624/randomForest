@@ -204,7 +204,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                     yflag[ninds[j]]=1; //flag y
                     for(int k=0; k<nsample;k++) ySelected[k]=x[ninds[j]+k*mdim];
                     zeroDouble(yptr, nsample);
-                       
+                       /*
                        regRF(xSelected, ySelected, xdimSelected, sampsize,
                          nthsize, nrnodes, nTree,mtry, imp,
                          cat,maxcat, jprint, doProx,oobprox,
@@ -224,6 +224,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
                               //yptrmtx[i+s*mdim]=(yptr[s]*nout[s]+ yptrmtx[i+s*mdim]*noutAll[s])/(noutAll[s]+nout[s]);                                
                                
                               }
+                              */
                        
    }
  }
