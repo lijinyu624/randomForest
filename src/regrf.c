@@ -137,7 +137,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   double yptr[nsample];
   int xdimSelected[2]={nsample,*subdim };
  
-  int* noutAll =(int*)S_alloc(mdim*mdim,sizeof(int));
+  //int* noutAll =(int*)S_alloc(mdim*mdim,sizeof(int));
   double* xSelected =(double*)S_alloc(*subdim*nsample,sizeof(double));
   double* yerr =(double*)S_alloc(mdim*nsample,sizeof(double));
 
