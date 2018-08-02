@@ -90,7 +90,7 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
            double *upper, double *mse, int *keepf, int *replace,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
-           int *nout, int *inbag, int *subdim, int* sampleCount, double* yptrmtx, double* cov
+           int *nout, int *inbag, int *subdim, int* sampleCount, double* yptrmtx, double* cov, int* noutAll
           
 
            ) {

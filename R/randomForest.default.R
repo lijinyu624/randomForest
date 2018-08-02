@@ -413,6 +413,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     sampleCount=as.integer(sampleCount), 
                     yptrmtx= matrix(double(n * p), ncol=p),
                     cov= matrix(double(p*p), ncol=p),
+					nout = matrix(integer(p*p), ncol = p),
                     DUP=FALSE,
                     PACKAGE="randomForest")
         ## Format the forest component, if present.
@@ -443,6 +444,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     predicted = structure(ypred + ymean, names=x.row.names),
                     pred= rfout$yptrmtx,
                     cov=rfout$cov,
+					nout = rfout$nout,
                     mse = rfout$mse,
                     rsq = 1 - rfout$mse / (var(y) * (n-1) / n),
                     oob.times = rfout$oob.times,
