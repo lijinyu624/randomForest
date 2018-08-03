@@ -151,9 +151,12 @@ void regRFMultiRes(double *x, int *xdim, int *sampsize,
   while(true){// iterate for *sampleCount times, each time select a subset of xs and ys
       i++;
       bool needMoreIter=false;
-      for(int m=0; m<mdim; m++)
-      {
-        if(yflag[m]==0) {
+      //for(int m=0; m<mdim; m++)
+      //{
+      //  if(yflag[m]==0) {
+	  for (int q=0;q<mdim*mdim;q++)
+	  {
+		  if (noutAll[q]==0) {
           needMoreIter=true;
           break;
         }
