@@ -13,7 +13,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
              proximity, oob.prox=proximity,
              norm.votes=TRUE, do.trace=FALSE,
              keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
-             keep.inbag=FALSE, subdim=floor(ncol(x)/2), sampleCount=100, ...) {
+             keep.inbag=FALSE, subdim=floor(ncol(x)/2), sampleCount=100, partition=6,...) {
     addclass <- is.null(y)
     classRF <- addclass || is.factor(y)
     if (!classRF && length(unique(y)) <= 5) {
@@ -365,7 +365,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
 		ymean <- mean(y)
 		y <- y - ymean
 		ytest <- ytest - ymean
-        rfout <- .C("regRFMultiRes",
+        rfout <- .C("regRFMultiRes2",
                     x,
                     #as.double(y),
                     as.integer(c(n, p)),
@@ -414,6 +414,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     yptrmtx= matrix(double(n * p), ncol=p),
                     cov= matrix(double(p*p), ncol=p),
 					nout = matrix(integer(p*p), ncol = p),
+					partition=as.integer(partition),
                     DUP=FALSE,
                     PACKAGE="randomForest")
         ## Format the forest component, if present.
