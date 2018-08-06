@@ -148,13 +148,13 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
          ninds[m] = temp;
         }
     }
-   for(int m=0; m< mdim;m++) Rprintf("newind: %d\n", ninds[m]);   
+   //for(int m=0; m< mdim;m++) Rprintf("newind: %d\n", ninds[m]);   
 
 	  
 	  //iterate for partition*(patition-1)/2 times.
 	  //partition the index to parts, each time combine any of two parts.
-	  for (int i=0;i<partition-1;i++){
-        for (int j=i+1;j<partition;j++){
+	  for (int i=0;i<*partition-1;i++){
+        for (int j=i+1;j<*partition;j++){
 	  
 		zeroDouble(yptrmtx,nsample*mdim);
 		zeroDouble(yerr,nsample*mdim);
