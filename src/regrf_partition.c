@@ -57,7 +57,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
            int *testdat, double *xts, int *nts, double *yts, int *labelts,
            double *yTestPred, double *proxts, double *msets, double *coef,
            int *nout, int *inbag, int *subdim, int* sampleCount, double* yptrmtx, 
-		   double* cov, int* noutAll, int* patition
+		   double* cov, int* noutAll, int* partition
           
 
            ) {
@@ -102,7 +102,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 
   double ySelected[nsample];
   double yptr[nsample];
-  //int xdimSelected[2]={nsample,*subdim};
+  int xdimSelected[2]={nsample,xdimCount};
   int yind[2*ydimCount];
   int xind[xdimCount];
   
