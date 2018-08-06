@@ -115,7 +115,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 
   
   /*select random variables as predictors and response variable. */
-  
+  /*
   int i=-1;
   
   while(true){
@@ -133,6 +133,8 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 
       if(!needMoreIter && i>*sampleCount)
         break;
+	*/
+	for (i=0;i<*sampleCount;i++){
 
       Rprintf("\n sampleCount: %d\n", i);
       
