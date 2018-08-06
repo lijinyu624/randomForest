@@ -134,7 +134,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
       if(!needMoreIter && i>*sampleCount)
         break;
 
-      Rprintf("sampleCount: %d\n", i);
+      Rprintf("\n sampleCount: %d\n", i);
       
 	  //shuffle the index ninds
          for(int m=0; m< mdim;m++) ninds[m] = m; 
