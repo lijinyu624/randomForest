@@ -146,6 +146,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
         swapInt(ninds[ktmp], ninds[last]);
         last--;
       }
+	  for (int m = 0; m < mdim; m++) Rprintf("newind: %d\n", ninds[m]);
 	  
 	  //iterate for partition*(patition-1)/2 times.
 	  //partition the index to parts, each time combine any of two parts.
