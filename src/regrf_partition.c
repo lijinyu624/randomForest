@@ -16,6 +16,7 @@
 #include "rf.h"
 #include <Rinternals.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 void simpleLinReg(int nsample, double *x, double *y, double *coef,
       double *mse, int *hasPred);
@@ -136,17 +137,19 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
       Rprintf("sampleCount: %d\n", i);
       
 	  //shuffle the index ninds
-      for(int m=0; m< mdim;m++) ninds[m] = m; 
-      //for(int m=0; m< mdim;m++) ninds_reverse[m] = 0;
-      //chooseVar(x,i,mdim,nsample, xdimCount, xSelected,ninds,ninds_reverse);
-      int ktmp;
-	  int last = mdim - 1;
-	  for (int m = 0; m < mdim; m++) {
-        ktmp = (int) (unif_rand() * (last+1));
-        swapInt(ninds[ktmp], ninds[last]);
-        last--;
-      }
-	  for (int m = 0; m < mdim; m++) Rprintf("newind: %d\n", ninds[m]);
+         for(int m=0; m< mdim;m++) ninds[m] = m; 
+         if (mdim > 1) 
+		{
+        for (int m = 0; m < mdim - 1; m++) 
+        {
+         int j = m + rand() / (RAND_MAX / (mdim - m) + 1);
+         int temp = ninds[j];
+         ninds[j] = ninds[m];
+         ninds[m] = temp;
+        }
+    }
+   for(int m=0; m< mdim;m++) printf("newind: %d\n", ninds[m]);   
+
 	  
 	  //iterate for partition*(patition-1)/2 times.
 	  //partition the index to parts, each time combine any of two parts.
