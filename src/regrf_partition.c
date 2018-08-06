@@ -77,14 +77,14 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 
 
   double * yb        = (double *) S_alloc(*sampsize, sizeof(double));
-  double *xb         = (double *) S_alloc(*subdim * *sampsize, sizeof(double));
+  double *xb         = (double *) S_alloc(xdimCount * *sampsize, sizeof(double));
   double *ytr        = (double *) S_alloc(nsample, sizeof(double));
   double *xtmp       = (double *) S_alloc(nsample, sizeof(double));
   double * resOOB    = (double *) S_alloc(nsample, sizeof(double));
 
   int * in        = (int *) S_alloc(nsample, sizeof(int));
   int *nodex      = (int *) S_alloc(nsample, sizeof(int));
-  int *varUsed    = (int *) S_alloc(*subdim, sizeof(int));
+  int *varUsed    = (int *) S_alloc(xdimCount, sizeof(int));
   int *nind = *replace ? NULL : (int *) S_alloc(nsample, sizeof(int));
 
    
@@ -155,7 +155,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 	  //partition the index to parts, each time combine any of two parts.
 	  for (int i=0;i<*partition-1;i++){
         for (int j=i+1;j<*partition;j++){
-	  
+	   Rprintf("newind: %d,%d",i,j);
 		zeroDouble(yptrmtx,nsample*mdim);
 		zeroDouble(yerr,nsample*mdim);
       
