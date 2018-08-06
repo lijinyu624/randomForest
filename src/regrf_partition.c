@@ -155,7 +155,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 	  //partition the index to parts, each time combine any of two parts.
 	  for (int i=0;i<*partition-1;i++){
         for (int j=i+1;j<*partition;j++){
-	   Rprintf("newind: %d,%d",i,j);
+	   Rprintf("comb: %d,%d",i,j);
 		zeroDouble(yptrmtx,nsample*mdim);
 		zeroDouble(yerr,nsample*mdim);
       
