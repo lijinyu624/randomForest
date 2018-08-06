@@ -148,7 +148,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
          ninds[m] = temp;
         }
     }
-   for(int m=0; m< mdim;m++) printf("newind: %d\n", ninds[m]);   
+   for(int m=0; m< mdim;m++) Rprintf("newind: %d\n", ninds[m]);   
 
 	  
 	  //iterate for partition*(patition-1)/2 times.
