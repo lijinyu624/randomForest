@@ -262,7 +262,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
                     //yflag[ninds[j]]=1; //flag y
                     for(int n=0; n<nsample;n++) 
 						ySelected[n]=x[ninds[yind[jj]]+n*mdim];
-					Rprintf("%d,",ninds[yind[jj]]);
+					//Rprintf("%d,",ninds[yind[jj]]);
                    // zeroDouble(yptr, nsample);
                        
                        regRF(xSelected, ySelected, xdimSelected, sampsize,
