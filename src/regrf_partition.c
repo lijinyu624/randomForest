@@ -225,7 +225,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
      }
 
 
-  }
+  }else{
   //j = *partition-1:
   Rprintf("comb: %d,%d",i,j);
   
@@ -289,7 +289,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
         }
      }
 
-
+  }
 			
 	}
 	}
