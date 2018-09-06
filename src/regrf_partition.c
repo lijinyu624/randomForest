@@ -235,12 +235,11 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
       
 	  //get yind (2*ydimCount) for possible response variables
 	  for (int k=0;k<ydimCount;k++)  yind[k] = k+ydimCount*i;
-	  for (int k=ydimCount;k<ydimCount + (mdim-j*ydimCount);k++) yind[k] = ydimCount*(j-1)+k;
-      for (int k=0;k<ydimCount + (mdim-j*ydimCount);k++)     Rprintf("%d,",yind[k]);      
+	  for (int k=ydimCount;k<ydimCount + (mdim-j*ydimCount);k++) yind[k] = ydimCount*(j-1)+k;  
 	  //get xind (mdim - 2*ydimCount) for predictor variables
 	  int s = 0;
       for (int m=0;m<mdim;m++){
-		  for (int r=0;r<ydimCount*2;r++){
+		  for (int r=0;r<ydimCount + (mdim-j*ydimCount);r++){
 			  if (m==yind[r]){
 				  m+=1;
 				  }
