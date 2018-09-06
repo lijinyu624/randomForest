@@ -258,11 +258,11 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 			  //Rprintf("%d,",ninds[xind[m]]);
           }
 	
-      for(int j=0; j<ydimCount + (mdim-j*ydimCount);j++){// select y
+      for(int jj=0; jj<ydimCount + (mdim-j*ydimCount);jj++){// select y
                     //yflag[ninds[j]]=1; //flag y
                     for(int n=0; n<nsample;n++) 
-						ySelected[n]=x[ninds[yind[j]]+n*mdim];
-					Rprintf("%d,",ninds[yind[j]]);
+						ySelected[n]=x[ninds[yind[jj]]+n*mdim];
+					Rprintf("%d,",ninds[yind[jj]]);
                    // zeroDouble(yptr, nsample);
                        
                        regRF(xSelected, ySelected, xdimSelected, sampsize,
@@ -278,8 +278,8 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
                               resOOB,  in,  nodex,  varUsed, nind,  ytree, nodexts, oobpair);
 
             for(int s=0; s<nsample; s++){
-               yptrmtx[ninds[yind[j]]+s*mdim] = yptr[s];       
-               yerr[ninds[yind[j]]+s*mdim] = yptrmtx[ninds[yind[j]]+s*mdim] - x[ninds[yind[j]]+s*mdim];                   
+               yptrmtx[ninds[yind[jj]]+s*mdim] = yptr[s];       
+               yerr[ninds[yind[jj]]+s*mdim] = yptrmtx[ninds[yind[jj]]+s*mdim] - x[ninds[yind[jj]]+s*mdim];                   
             }
     }
    
