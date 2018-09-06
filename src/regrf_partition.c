@@ -158,7 +158,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 	  for (int i=0;i<*partition-1;i++){
         for (int j=i+1;j<*partition;j++){
 			if (j<*partition-1){
-	   Rprintf("comb: %d,%d",i,j);
+	   Rprintf("comb: %d,%d/n",i,j);
 	   
 	    int yind[2*ydimCount];
 		zeroDouble(yptrmtx,nsample*mdim);
@@ -227,7 +227,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 
   }else{
   //j = *partition-1:
-  Rprintf("comb: %d,%d",i,j);
+  Rprintf("comb: %d,%d/n",i,j);
   
 		int yind[ydimCount + (mdim-j*ydimCount)];
 		zeroDouble(yptrmtx,nsample*mdim);
@@ -236,7 +236,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 	  //get yind (2*ydimCount) for possible response variables
 	  for (int k=0;k<ydimCount;k++)  yind[k] = k+ydimCount*i;
 	  for (int k=ydimCount;k<ydimCount + (mdim-j*ydimCount);k++) yind[k] = ydimCount*(j-1)+k;
-               
+      for (int k=0;k<ydimCount + (mdim-j*ydimCount);k++)     Rprintf("%d,",yind[k]);      
 	  //get xind (mdim - 2*ydimCount) for predictor variables
 	  int s = 0;
       for (int m=0;m<mdim;m++){
