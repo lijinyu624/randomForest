@@ -246,7 +246,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 				  }
 			  }
 		  xind[s]=m;
-		  Rprintf("%d,",xind[s]);
+		  //Rprintf("%d,",xind[s]);
 		  s++;
           }
 	  }
@@ -255,7 +255,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 	for(int s = 0; s<nsample; s++)  
         for(int m = 0; m < xdimCount; m++) {
               xSelected[m + s*xdimCount] = x[ninds[xind[m]] + s*mdim];
-			  Rprintf("%d,",ninds[xind[m]]);
+			  //Rprintf("%d,",ninds[xind[m]]);
           }
 	
       for(int j=0; j<ydimCount + (mdim-j*ydimCount);j++){// select y
