@@ -104,7 +104,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
   double ySelected[nsample];
   double yptr[nsample];
   int xdimSelected[2]={nsample,xdimCount};
-  int yind[2*ydimCount];
+  //int yind[2*ydimCount];
   int xind[xdimCount];
   
   //int* noutAll =(int*)S_alloc(mdim*mdim,sizeof(int));
@@ -157,17 +157,21 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 	  //partition the index to parts, each time combine any of two parts.
 	  for (int i=0;i<*partition-1;i++){
         for (int j=i+1;j<*partition;j++){
+			if (j<*partition-1){
 	   Rprintf("comb: %d,%d",i,j);
+	   
+	    int yind[2*ydimCount];
 		zeroDouble(yptrmtx,nsample*mdim);
 		zeroDouble(yerr,nsample*mdim);
       
 	  //get yind (2*ydimCount) for possible response variables
 	  for (int k=0;k<ydimCount;k++){
                 yind[k] = k+ydimCount*i;
-                printf("%d ",yind[k]);
+                //printf("%d ",yind[k]);
                 yind[k+ydimCount] = k+ydimCount*j;
-                printf("%d ",yind[k+ydimCount]);
+                //printf("%d ",yind[k+ydimCount]);
             }
+
 	  //get xind (mdim - 2*ydimCount) for predictor variables
 	  int s = 0;
       for (int m=0;m<mdim;m++){
@@ -222,7 +226,73 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 
 
   }
-}
+  //j = *partition-1:
+  Rprintf("comb: %d,%d",i,j);
+  
+		int yind[ydimCount + (mdim-j*ydimCount)];
+		zeroDouble(yptrmtx,nsample*mdim);
+		zeroDouble(yerr,nsample*mdim);
+      
+	  //get yind (2*ydimCount) for possible response variables
+	  for (int k=0;k<ydimCount;k++)  yind[k] = k+ydimCount*i;
+	  for (int k=ydimCount;k<ydimCount + (mdim-j*ydimCount);k++) yind[k] = ydimCount*(j-1)+k;
+               
+	  //get xind (mdim - 2*ydimCount) for predictor variables
+	  int s = 0;
+      for (int m=0;m<mdim;m++){
+		  for (int r=0;r<ydimCount*2;r++){
+			  if (m==yind[r]){
+				  m+=1;
+				  }
+			  }
+		  xind[s]=m;
+		  //printf("%d ",xind[s]);
+		  s++;
+          }
+		  
+	//GetxSelected
+	for(int s = 0; s<nsample; s++)  
+        for(int m = 0; m < xdimCount; m++) {
+              xSelected[m + s*xdimCount] = x[ninds[xind[m]] + s*mdim];
+          }
+	
+      for(int j=0; j<ydimCount + (mdim-j*ydimCount);j++){// select y
+                    //yflag[ninds[j]]=1; //flag y
+                    for(int n=0; n<nsample;n++) 
+						ySelected[n]=x[ninds[yind[j]]+n*mdim];
+                   // zeroDouble(yptr, nsample);
+                       
+                       regRF(xSelected, ySelected, xdimSelected, sampsize,
+                         nthsize, nrnodes, nTree,mtry, imp,
+                         cat,maxcat, jprint, doProx,oobprox,
+                               biasCorr, yptr, errimp, impmat,
+                              impSD, prox, treeSize,nodestatus,
+                               lDaughter, rDaughter, avnode, mbest,
+                              upper, mse, keepf, replace,
+                               testdat, xts, nts,yts, labelts,
+                               yTestPred, proxts, msets, coef,
+                               nout, inbag,  yb,  xb,ytr, xtmp,
+                              resOOB,  in,  nodex,  varUsed, nind,  ytree, nodexts, oobpair);
+
+            for(int s=0; s<nsample; s++){
+               yptrmtx[ninds[yind[j]]+s*mdim] = yptr[s];       
+               yerr[ninds[yind[j]]+s*mdim] = yptrmtx[ninds[yind[j]]+s*mdim] - x[ninds[yind[j]]+s*mdim];                   
+            }
+    }
+   
+     zeroDouble(cov_tmp,mdim*mdim);
+     computeCov(yerr,cov_tmp,nsample,mdim);
+     for(int m1=0; m1<mdim; m1++){
+        for(int m2=0; m2<mdim; m2++){
+			if (cov_tmp[m1*mdim+m2]!=0)
+            cov[m1*mdim+m2]=(cov[m1*mdim+m2]*noutAll[m1*mdim+m2]+cov_tmp[m1*mdim+m2])/(++noutAll[m1*mdim+m2]);
+        }
+     }
+
+
+			
+	}
+	}
 }
 }
 
