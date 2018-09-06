@@ -150,7 +150,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
          ninds[m] = temp;
         }
     }
-   for(int m=0; m< mdim;m++) Rprintf("newind: %d\n", ninds[m]); 
+   //for(int m=0; m< mdim;m++) Rprintf("newind: %d\n", ninds[m]); 
 
 	  
 	  //iterate for partition*(patition-1)/2 times.
@@ -168,7 +168,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
                 yind[k+ydimCount] = k+ydimCount*j;
                 //printf("%d ",ynewind[k+ydimCount]);
             }
-			
+	  for(int k=0;k<ydimCount;k++) Rprintf("newind: %d\n", ninds[yind[k]]); 
 	  //get xind (mdim - 2*ydimCount) for predictor variables
 	  int s = 0;
       for (int m=0;m<mdim;m++){
