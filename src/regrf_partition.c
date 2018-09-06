@@ -238,6 +238,7 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 	  for (int k=ydimCount;k<ydimCount + (mdim-j*ydimCount);k++) yind[k] = ydimCount*(j-1)+k;  
 	  //get xind (mdim - 2*ydimCount) for predictor variables
 	  int s = 0;
+	  if (s<xdimCount){
       for (int m=0;m<mdim;m++){
 		  for (int r=0;r<ydimCount + (mdim-j*ydimCount);r++){
 			  if (m==yind[r]){
@@ -245,20 +246,23 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
 				  }
 			  }
 		  xind[s]=m;
-		  //printf("%d ",xind[s]);
+		  Rprintf("%d,",xind[s]);
 		  s++;
           }
+	  }
 		  
 	//GetxSelected
 	for(int s = 0; s<nsample; s++)  
         for(int m = 0; m < xdimCount; m++) {
               xSelected[m + s*xdimCount] = x[ninds[xind[m]] + s*mdim];
+			  Rprintf("d,",ninds[xind[m]]);
           }
 	
       for(int j=0; j<ydimCount + (mdim-j*ydimCount);j++){// select y
                     //yflag[ninds[j]]=1; //flag y
                     for(int n=0; n<nsample;n++) 
 						ySelected[n]=x[ninds[yind[j]]+n*mdim];
+					Rprintf("d,",ninds[yind[j]]);
                    // zeroDouble(yptr, nsample);
                        
                        regRF(xSelected, ySelected, xdimSelected, sampsize,
