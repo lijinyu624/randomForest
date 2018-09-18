@@ -472,6 +472,7 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
                        avnode + idx, mbest + idx, treeSize[j], cat, *maxcat,
                        nodex);
 		/* yptr is the aggregated prediction by all trees grown so far */
+		
 		errb = 0.0;
 		ooberr = 0.0;
 		jout = 0; /* jout is the number of cases that has been OOB so far */
@@ -490,139 +491,9 @@ void regRF(double *x, double *y, int *xdim, int *sampsize,
 			}
 		}
 		errb /= jout;
-		/* Do simple linear regression of y on yhat for bias correction. */
-		if (*biasCorr) simpleLinReg(nsample, yptr, y, coef, &errb, nout);
-
-		/* predict testset data with the current tree */
-		if (*testdat) {
-			predictRegTree(xts, ntest, mdim, lDaughter + idx,
-						   rDaughter + idx, nodestatus + idx, ytree,
-                           upper + idx, avnode + idx,
-						   mbest + idx, treeSize[j], cat, *maxcat, nodexts);
-			/* ytree is the prediction for test data by the current tree */
-			/* yTestPred is the average prediction by all trees grown so far */
-			errts = 0.0;
-			for (n = 0; n < ntest; ++n) {
-				yTestPred[n] = (j * yTestPred[n] + ytree[n]) / (j + 1);
-			}
-            /* compute testset MSE */
-			if (*labelts) {
-				for (n = 0; n < ntest; ++n) {
-					resid = *biasCorr ?
-                        yts[n] - (coef[0] + coef[1]*yTestPred[n]) :
-                        yts[n] - yTestPred[n];
-					errts += resid * resid;
-				}
-				errts /= ntest;
-			}
-		}
-        /* Print running output. */
-		if ((j + 1) % *jprint == 0) {
-			Rprintf("%4d |", j + 1);
-			Rprintf(" %8.4g %8.2f ", errb, 100 * errb / varY);
-			if(*labelts == 1) Rprintf("| %8.4g %8.2f ",
-									  errts, 100.0 * errts / varYts);
-			Rprintf("|\n");
-		}
-		mse[j] = errb;
-		if (*labelts) msets[j] = errts;
-
-		/*  DO PROXIMITIES */
-		if (*doProx) {
-			computeProximity(prox, *oobprox, nodex, in, oobpair, nsample);
-			/* proximity for test data */
-			if (*testdat) {
-                /* In the next call, in and oobpair are not used. */
-                computeProximity(proxts, 0, nodexts, in, oobpair, ntest);
-				for (n = 0; n < ntest; ++n) {
-					for (k = 0; k < nsample; ++k) {
-						if (nodexts[n] == nodex[k]) {
-							proxts[n + ntest * (k+ntest)] += 1.0;
-						}
-					}
-				}
-			}
-		}
-
-		/* Variable importance */
-		if (varImp) {
-			for (mr = 0; mr < mdim; ++mr) {
-                if (varUsed[mr]) { /* Go ahead if the variable is used */
-                    /* make a copy of the m-th variable into xtmp */
-                    for (n = 0; n < nsample; ++n)
-                        xtmp[n] = x[mr + n * mdim];
-                    ooberrperm = 0.0;
-                    for (k = 0; k < nPerm; ++k) {
-                        permuteOOB(mr, x, in, nsample, mdim);
-                        predictRegTree(x, nsample, mdim, lDaughter + idx,
-                                       rDaughter + idx, nodestatus + idx, ytr,
-                                       upper + idx, avnode + idx, mbest + idx,
-                                       treeSize[j], cat, *maxcat, nodex);
-                        for (n = 0; n < nsample; ++n) {
-                            if (in[n] == 0) {
-                                r = ytr[n] - y[n];
-                                ooberrperm += r * r;
-                                if (localImp) {
-                                    impmat[mr + n * mdim] +=
-                                        (r*r - resOOB[n]*resOOB[n]) / nPerm;
-                                }
-                            }
-                        }
-                    }
-                    delta = (ooberrperm / nPerm - ooberr) / nOOB;
-                    errimp[mr] += delta;
-                    impSD[mr] += delta * delta;
-                    /* copy original data back */
-                    for (n = 0; n < nsample; ++n)
-                        x[mr + n * mdim] = xtmp[n];
-                }
-            }
-        }
     }
     PutRNGstate();
     /* end of tree iterations=======================================*/
-
-    if (*biasCorr) {  /* bias correction for predicted values */
-		for (n = 0; n < nsample; ++n) {
-			if (nout[n]) yptr[n] = coef[0] + coef[1] * yptr[n];
-		}
-		if (*testdat) {
-			for (n = 0; n < ntest; ++n) {
-				yTestPred[n] = coef[0] + coef[1] * yTestPred[n];
-			}
-		}
-    }
-
-    if (*doProx) {
-		for (n = 0; n < nsample; ++n) {
-			for (k = n + 1; k < nsample; ++k) {
-                prox[nsample*k + n] /= *oobprox ?
-                    (oobpair[nsample*k + n] > 0 ? oobpair[nsample*k + n] : 1) :
-                    *nTree;
-                prox[nsample * n + k] = prox[nsample * k + n];
-            }
-			prox[nsample * n + n] = 1.0;
-        }
-		if (*testdat) {
-			for (n = 0; n < ntest; ++n)
-				for (k = 0; k < ntest + nsample; ++k)
-					proxts[ntest*k + n] /= *nTree;
-		}
-    }
-
-    if (varImp) {
-		for (m = 0; m < mdim; ++m) {
-			errimp[m] = errimp[m] / *nTree;
-			impSD[m] = sqrt( ((impSD[m] / *nTree) -
-							  (errimp[m] * errimp[m])) / *nTree );
-			if (localImp) {
-                for (n = 0; n < nsample; ++n) {
-                    impmat[m + n * mdim] /= nout[n];
-                }
-			}
-        }
-    }
-    for (m = 0; m < mdim; ++m) tgini[m] /= *nTree;
 }
 
 /*----------------------------------------------------------------------*/
