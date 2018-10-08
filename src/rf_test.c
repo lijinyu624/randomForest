@@ -94,22 +94,22 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					 ipi, classwt, cut, nodesize, outcl, counttr, prox,
 					 imprt, impsd, impmat, nrnodes, ndbigtree, nodestatus, bestvar, treemap,
 					 nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
-					 outclts, labelts, proxts, errts,inbag)
+					 outclts, labelts, proxts, errts,inbag);
 					
 					double *counttrnew      = (double *) S_alloc(4 * dimx[0], sizeof(double));
 					zeroDouble(counttrnew, 4 * dimx[0]);
 					
 					int s = 0;
 					for (int j=0;j<4;j++){
-						bool exist = false;
+						bool exist = 0;
 						for (int n=0; n<sampsize;n++){
-							if(ynew[n] == j) exist = true;
+							if(ynew[n] == j) exist = 1;
 						}
-						if (exist == true){
-							for (int n=0; n<sampsize;n++) counttrnew[n*4 + j] = counttr[n*ncl + s] + 0.000001
+						if (exist == 1){
+							for (int n=0; n<sampsize;n++) counttrnew[n*4 + j] = counttr[n* *ncl + s] + 0.000001;
 							s = s+1;
 						}
-						if (exist == false){
+						if (exist == 0){
 							for (int n=0; n<sampsize;n++) counttrnew[n*4 + j] = 0.0 + + 0.000001;
 						}
 					}
@@ -117,7 +117,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					int sum = 0;
 					double logg[dimx[0]];
 					for (int n=0; n<sampsize;n++){
-						logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]))
+						logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
 						sum = sum - logg[n];
 					}
 					for (int i=0; i< (dimx[1]-1);i++){
