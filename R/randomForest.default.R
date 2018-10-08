@@ -2,7 +2,7 @@
 mylevels <- function(x) if (is.factor(x)) levels(x) else 0
 
 "randomForest.default" <-
-    function(x, y=NULL, ClassRF = TRUE, ntree=100,
+    function(x, y=NULL, classRF = TRUE, ntree=100,
              mtry=if (!is.null(y) && !is.factor(y))
              max(floor(subdim/3), 1) else floor(sqrt(subdim)),
              replace=TRUE, classwt=NULL, cutoff, strata,
