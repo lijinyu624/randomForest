@@ -70,7 +70,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 			 for (int j=i;j<dimx[1];j++){
                     for(int n=0; n<sampsize;n++) ynew[n]=x[i+n*dimx[0]]*2 + x[j+n*dimx[0]];
 					
-					m = 0;
+					int m = 0;
 					for (int s=0;s<xdimCount;s++){
 						if (m==i|m==j) m+=1;
 						for(int n=0; n<sampsize;n++) xnew[s+n*dim[0]] = x[m+n*dimx[0]];
