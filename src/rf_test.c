@@ -61,29 +61,29 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		int mdim     = dimx[1];
 		int nsample  = dimx[0];
 		int xdimCount=mdim-2;
-		int xdimnew[2]={sampsize,xdimCount};
+		int xdimnew[2]={nsample,xdimCount};
 		
-		double *xnew      = (double *) S_alloc(xdimCount* sampsize, sizeof(double));
-		double *ynew      = (double *) S_alloc(sampsize, sizeof(double));
+		double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
+		double *ynew      = (double *) S_alloc(nsample, sizeof(double));
 		
 		
 		 for(int i=0; i< (mdim-1);i++){
 			 for (int j=i;j<mdim;j++){
-                    for(int n=0; n<sampsize;n++) ynew[n]=x[i+n*sampsize]*2 + x[j+n*sampsize];
+                    for(int n=0; n<nsample;n++) ynew[n]=x[i+n*nsample]*2 + x[j+n*nsample];
 					
 					int m = 0;
 					for (int s=0;s<xdimCount;s++){
 						if (m==i|m==j) m+=1;
-						for(int n=0; n<sampsize;n++) xnew[s+n*dim[0]] = x[m+n*sampsize];
+						for(int n=0; n<nsample;n++) xnew[s+n*nsample] = x[m+n*nsample];
 					}
 					
-					int *ncl = sampsize;
-					for (int n=0; n<sampsize;n++) {
+					int *ncl = nsample;
+					for (int n=0; n<nsample;n++) {
 						if (ynew[n+1] == ynew[n]){
 							n = n+1;
 							ncl = ncl-1;
 						}
-						for (int m=n+1; m<sampsize;m++){
+						for (int m=n+1; m<nsample;m++){
 							if (ynew[m] == ynew[n]) ncl=ncl-1;
 						}
 					}		
@@ -96,27 +96,27 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					 nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
 					 outclts, labelts, proxts, errts,inbag);
 					
-					double *counttrnew      = (double *) S_alloc(4 * sampsize, sizeof(double));
-					zeroDouble(counttrnew, 4 * sampsize);
+					double *counttrnew      = (double *) S_alloc(4 * nsample, sizeof(double));
+					zeroDouble(counttrnew, 4 * nsample);
 					
 					int s = 0;
 					for (int j=0;j<4;j++){
 						int exist = 0;
-						for (int n=0; n<sampsize;n++){
+						for (int n=0; n<nsample;n++){
 							if(ynew[n] == j) exist = 1;
 						}
 						if (exist == 1){
-							for (int n=0; n<sampsize;n++) counttrnew[n*4 + j] = counttr[n* *ncl + s] + 0.000001;
+							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = counttr[n* *ncl + s] + 0.000001;
 							s = s+1;
 						}
 						if (exist == 0){
-							for (int n=0; n<sampsize;n++) counttrnew[n*4 + j] = 0.0 + + 0.000001;
+							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = 0.0 + + 0.000001;
 						}
 					}
 					
 					int sum = 0;
 					double logg[nsample];
-					for (int n=0; n<sampsize;n++){
+					for (int n=0; n<nsample;n++){
 						logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
 						sum = sum - logg[n];
 					}
