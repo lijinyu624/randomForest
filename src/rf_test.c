@@ -58,22 +58,23 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 	     int *outclts, int *labelts, double *proxts, double *errts,
              int *inbag, double *graph, double *counttsnew) {
 				 
-		
-		int xdimCount=dimx[1]-2;
+		int mdim     = dimx[1];
+		int nsample  = dimx[0];
+		int xdimCount=mdim-2;
 		int xdimnew[2]={sampsize,xdimCount};
 		
-		double *xnew      = (double *) S_alloc(xdimCount* *sampsize, sizeof(double));
-		double *ynew      = (double *) S_alloc(*sampsize, sizeof(double));
+		double *xnew      = (double *) S_alloc(xdimCount* sampsize, sizeof(double));
+		double *ynew      = (double *) S_alloc(sampsize, sizeof(double));
 		
 		
-		 for(int i=0; i< (dimx[1]-1);i++){
-			 for (int j=i;j<dimx[1];j++){
-                    for(int n=0; n<sampsize;n++) ynew[n]=x[i+n*dimx[0]]*2 + x[j+n*dimx[0]];
+		 for(int i=0; i< (mdim-1);i++){
+			 for (int j=i;j<mdim;j++){
+                    for(int n=0; n<sampsize;n++) ynew[n]=x[i+n*sampsize]*2 + x[j+n*sampsize];
 					
 					int m = 0;
 					for (int s=0;s<xdimCount;s++){
 						if (m==i|m==j) m+=1;
-						for(int n=0; n<sampsize;n++) xnew[s+n*dim[0]] = x[m+n*dimx[0]];
+						for(int n=0; n<sampsize;n++) xnew[s+n*dim[0]] = x[m+n*sampsize];
 					}
 					
 					int *ncl = sampsize;
@@ -96,8 +97,8 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					 nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
 					 outclts, labelts, proxts, errts,inbag);
 					
-					double *counttrnew      = (double *) S_alloc(4 * dimx[0], sizeof(double));
-					zeroDouble(counttrnew, 4 * dimx[0]);
+					double *counttrnew      = (double *) S_alloc(4 * sampsize, sizeof(double));
+					zeroDouble(counttrnew, 4 * sampsize);
 					
 					int s = 0;
 					for (int j=0;j<4;j++){
@@ -115,16 +116,16 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					}
 					
 					int sum = 0;
-					double logg[dimx[0]];
+					double logg[nsample];
 					for (int n=0; n<sampsize;n++){
 						logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
 						sum = sum - logg[n];
 					}
-					for (int i=0; i< (dimx[1]-1);i++){
-						for (int j=i+1;j<dimx[1];j++){
-							graph[i*dimx[1]+i] = 0.0;
-							graph[i*dimx[1]+j] = sum/dimx[0];
-							graph[j*dimx[1]+i] = sum/dimx[0];
+					for (int i=0; i< (mdim-1);i++){
+						for (int j=i+1;j<mdim;j++){
+							graph[i*mdim+i] = 0.0;
+							graph[i*mdim+j] = sum/nsample;
+							graph[j*mdim+i] = sum/nsample;
 						}
 					}
 					
