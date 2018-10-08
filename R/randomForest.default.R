@@ -13,7 +13,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
              proximity, oob.prox=proximity,
              norm.votes=TRUE, do.trace=FALSE, corr.bias=FALSE,
              keep.inbag=FALSE, subdim=floor(ncol(x)/2), niter=100, partition=6,...) {
-			 
+		addclass <- is.null(y)	 
         if (!classRF && length(unique(y)) <= 5) {
         warning("The response has five or fewer unique values.  Are you sure you want to do regression?")
     }
