@@ -88,7 +88,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 							if (ynew[m] == ynew[n]) ncl=ncl-1;
 						}
 					}		
-					
+					printf("%d",ncl);
 					
 					classRF(xnew, xdimnew, ynew, ncl, cat, maxcat,
 					 sampsize, strata, Options, ntree, nvar,
