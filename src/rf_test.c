@@ -47,18 +47,6 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 	     int *outclts, int *labelts, double *proxts, double *errts,
              int *inbag)
 
-void computeCov(double* err, double* cov, int nsample, int mdim){ 
-    for(int m1=0; m1<mdim; m1++){
-		for(int m2=0; m2<mdim; m2++){
-			cov[m1+m2*mdim]=0;
-			for(int s=0; s<nsample; s++){
-				cov[m1+m2*mdim]+=err[m1+s*mdim]*err[m2+s*mdim];
-			}
-			cov[m1+m2*mdim]/=nsample;
-        }
-    }
-}
-
 void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 	     int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
 	     int *ipi, double *classwt, double *cut, int *nodesize,
