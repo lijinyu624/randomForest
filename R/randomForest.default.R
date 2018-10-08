@@ -185,7 +185,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
         nrnodes <- min(c(nrnodes, max(c(maxnodes, 1))))
     }
     ## Compiled code expects variables in rows and observations in columns.
-    x <- t(x)
+    # x <- t(x)
     storage.mode(x) <- "double"
     if (testdat) {
         xtest <- t(xtest)
