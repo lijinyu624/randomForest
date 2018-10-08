@@ -14,7 +14,8 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
              norm.votes=TRUE, do.trace=FALSE,
              keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
              keep.inbag=FALSE, subdim=floor(ncol(x)/2), niter =100, partition = 6,...) {
-
+	
+	addclass = FALSE
     n <- nrow(x)
     p <- ncol(x)
     if (n == 0) stop("data (x) has 0 rows")
@@ -36,6 +37,14 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
     if (mtry < 1 || mtry > p)
         warning("invalid mtry: reset to within valid range")
     mtry <- max(1, min(p, round(mtry)))
+    if (!is.null(y)) {
+        if (length(y) != n) stop("length of response must be the same as predictors")
+        addclass <- FALSE
+    } else {
+        if (!addclass) addclass <- TRUE
+        y <- factor(c(rep(1, n), rep(2, n)))
+        x <- rbind(x, x)
+    }
 
     ## Check for NAs.
     if (any(is.na(x))) stop("NA not permitted in predictors")
