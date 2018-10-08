@@ -69,6 +69,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		
 		 for(int i=0; i< (mdim-1);i++){
 			 for (int j=i;j<mdim;j++){
+				 printf("%d,%d ",i,j);
                     for(int n=0; n<nsample;n++) ynew[n]=x[i+n*nsample]*2 + x[j+n*nsample];
 					
 					int m = 0;
@@ -120,15 +121,10 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 						logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
 						sum = sum - logg[n];
 					}
-					for (int i=0; i< (mdim-1);i++){
-						for (int j=i+1;j<mdim;j++){
-							graph[i*mdim+i] = 0.0;
-							graph[i*mdim+j] = sum/nsample;
-							graph[j*mdim+i] = sum/nsample;
-						}
-					}
 					
-						  
+					graph[i*mdim+i] = 0.0;
+					graph[i*mdim+j] = sum/nsample;
+					graph[j*mdim+i] = sum/nsample;				  
 					 
 		}
 	}
