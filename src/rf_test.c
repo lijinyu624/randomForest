@@ -78,7 +78,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					}
 					
 					int *ncl = sampsize;
-					int cl[ncl];
 					for (int n=0; n<sampsize;n++) {
 						if (ynew[n+1] == ynew[n]){
 							n = n+1;
@@ -102,7 +101,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					
 					int s = 0;
 					for (int j=0;j<4;j++){
-						bool exist = 0;
+						int exist = 0;
 						for (int n=0; n<sampsize;n++){
 							if(ynew[n] == j) exist = 1;
 						}
