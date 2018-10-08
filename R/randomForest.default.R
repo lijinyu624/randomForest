@@ -25,16 +25,6 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
     x.row.names <- rownames(x)
     x.col.names <- if (is.null(colnames(x))) 1:ncol(x) else colnames(x)
 
-    ## overcome R's lazy evaluation:
-    keep.forest <- keep.forest
-
-    testdat <- !is.null(xtest)
-    if (testdat) {
-        if (ncol(x) != ncol(xtest))
-            stop("x and xtest must have same number of columns")
-        ntest <- nrow(xtest)
-        xts.row.names <- rownames(xtest)
-    }
 
     ## Make sure mtry is in reasonable range.
     if (mtry < 1 || mtry > p)
@@ -51,31 +41,12 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
 
     ## Check for NAs.
     if (any(is.na(x))) stop("NA not permitted in predictors")
-    if (testdat && any(is.na(xtest))) stop("NA not permitted in xtest")
-    if (any(is.na(y))) stop("NA not permitted in response")
-    if (!is.null(ytest) && any(is.na(ytest))) stop("NA not permitted in ytest")
-
     if (is.data.frame(x)) {
         xlevels <- lapply(x, mylevels)
         ncat <- sapply(xlevels, length)
         ## Treat ordered factors as numerics.
         ncat <- ifelse(sapply(x, is.ordered), 1, ncat)
         x <- data.matrix(x)
-        if(testdat) {
-            if(!is.data.frame(xtest))
-                stop("xtest must be data frame if x is")
-            xfactor <- which(sapply(xtest, is.factor))
-            if (length(xfactor) > 0) {
-                for (i in xfactor) {
-                    if (any(! levels(xtest[[i]]) %in% xlevels[[i]]))
-                        stop("New factor levels in xtest not present in x")
-                    xtest[[i]] <-
-                        factor(xlevels[[i]][match(xtest[[i]], xlevels[[i]])],
-                               levels=xlevels[[i]])
-                }
-            }
-            xtest <- data.matrix(xtest)
-        }
     } else {
         ncat <- rep(1, p)
 		names(ncat) <- colnames(x)
@@ -86,14 +57,9 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
         stop("Can not handle categorical predictors with more than 53 categories.")
 
     if (classRF) {
-        nclass <- length(levels(y))
+        nclass <- 4
         ## Check for empty classes:
         if (any(table(y) == 0)) stop("Can't have empty classes in y.")
-        if (!is.null(ytest)) {
-            if (!is.factor(ytest)) stop("ytest must be a factor")
-            if (!all(levels(y) == levels(ytest)))
-                stop("y and ytest must have the same levels")
-        }
         if (missing(cutoff)) {
             cutoff <- rep(1 / nclass, nclass)
         } else {
@@ -190,21 +156,6 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
     ## Compiled code expects variables in rows and observations in columns.
     x <- t(x)
     storage.mode(x) <- "double"
-    if (testdat) {
-        xtest <- t(xtest)
-        storage.mode(xtest) <- "double"
-        if (is.null(ytest)) {
-            ytest <- labelts <- 0
-        } else {
-            labelts <- TRUE
-        }
-    } else {
-        xtest <- double(1)
-        ytest <- double(1)
-        ntest <- 1
-        labelts <- FALSE
-    }
-    nt <- if (keep.forest) ntree else 1
 
     if (classRF) {
         cwt <- classwt
