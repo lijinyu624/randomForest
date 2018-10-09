@@ -62,7 +62,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		int nsample  = dimx[0];
 		int xdimCount=mdim-2;
 		int xdimnew[2]={nsample,xdimCount};
-		printf("%d,%d ",mdim,nsample);
 		
 		double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
 		double ynew[nsample];
@@ -113,6 +112,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					
 					int s = 0;
 					for (int j=0;j<4;j++){
+						printf("%d",j);
 						int exist = 0;
 						for (int n=0; n<nsample;n++){
 							if(ynew[n] == j) exist = 1;
