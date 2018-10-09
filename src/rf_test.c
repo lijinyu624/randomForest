@@ -67,7 +67,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		zeroDouble(counttrnew, 4 * nsample);
 		
 		double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
-		double ynew[nsample];
+		int ynew[nsample];
 		
 		 for(int i=0; i< (mdim-1);i++){
 			 for (int j=i+1;j<mdim;j++){
@@ -86,7 +86,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					
 					int ncl = 0;
 					int max = -1;
-					Rprintf("%d,%d ",ncl,max);
 					for (int n=0; n<nsample;n++) {
 						if (max < ynew[i]){
 							max = ynew[i];
