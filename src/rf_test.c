@@ -111,6 +111,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					 outclts, labelts, proxts, errts,inbag);
 					 
 					 int s = 0;
+					 printf("%d",s);
 					for (int j=0;j<4;j++){
 						printf("%d",j);
 						int exist = 0;
@@ -125,7 +126,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = 0.0 + + 0.000001;
 						}
 					}
-					
+					printf("%d",s);
 					int sum = 0;
 					double logg[nsample];
 					for (int n=0; n<nsample;n++){
