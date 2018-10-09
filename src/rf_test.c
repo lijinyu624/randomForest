@@ -86,7 +86,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					}
 					
 					int flag = 0;
-					for (int k=0; k<nsample) {
+					for (int k=0; k<nsample;) {
 						for (int n=0; n<nsample;n++){
 							if (ynew[n] == max){
 								if (flag == 0){
