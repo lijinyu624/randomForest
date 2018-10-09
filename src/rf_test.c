@@ -56,7 +56,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 	     int *nodeclass, double *xbestsplit, double *errtr,
 	     int *testdat, double *xts, int *clts, int *nts, double *countts,
 	     int *outclts, int *labelts, double *proxts, double *errts,
-             int *inbag, double *graph, double *counttsnew) {
+             int *inbag, double *graph, double *counttrnew) {
 				 
 		int mdim     = dimx[1];
 		int nsample  = dimx[0];
