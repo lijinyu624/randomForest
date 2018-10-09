@@ -71,7 +71,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		
 		 for(int i=0; i< (mdim-1);i++){
 			 for (int j=i+1;j<mdim;j++){
-				 printf("%d,%d ",i,j);
+				 Rprintf("%d,%d ",i,j);
                     for(int n=0; n<nsample;n++) ynew[n]=x[i+n*mdim]*2 + x[j+n*mdim];
 					
 					int t = 0;
@@ -86,7 +86,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					
 					int ncl = 0;
 					int max = -1;
-					printf("%d,%d ",ncl,max);
+					Rprintf("%d,%d ",ncl,max);
 					for (int n=0; n<nsample;n++) {
 						if (max < ynew[i]){
 							max = ynew[i];
@@ -107,7 +107,42 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 						max--;
 						flag = 0;
 					}		
-					printf("%d",ncl);
+					Rprintf("%d",ncl);
+					
+					classRF(xnew, xdimnew, ynew, ncl, cat, maxcat,
+					 sampsize, strata, Options, ntree, nvar,
+					 ipi, classwt, cut, nodesize, outcl, counttr, prox,
+					 imprt, impsd, impmat, nrnodes, ndbigtree, nodestatus, bestvar, treemap,
+					 nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
+					 outclts, labelts, proxts, errts,inbag);
+					 
+					 int s = 0;
+					 printf("%d",s);
+					for (int j=0;j<4;j++){
+						printf("%d",j);
+						int exist = 0;
+						for (int n=0; n<nsample;n++){
+							if(ynew[n] == j) exist = 1;
+						}
+						if (exist == 1){
+							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = counttr[n*ncl + s] + 0.000001;
+							s = s+1;
+						}
+						if (exist == 0){
+							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = 0.0 + + 0.000001;
+						}
+					}
+					printf("%d",s);
+					int sum = 0;
+					double logg[nsample];
+					for (int n=0; n<nsample;n++){
+						logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
+						sum = sum - logg[n];
+					}
+					
+					graph[i*mdim+i] = 0.0;
+					graph[i*mdim+j] = sum/nsample;
+					graph[j*mdim+i] = sum/nsample;				  		
 					
 					
 						 
