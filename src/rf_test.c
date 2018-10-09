@@ -63,6 +63,9 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		int xdimCount=mdim-2;
 		int xdimnew[2]={nsample,xdimCount};
 		
+		zeroDouble(graph,mdim*mdim);
+		zeroDouble(counttrnew, 4 * nsample);
+		
 		double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
 		double ynew[nsample];
 		
@@ -107,9 +110,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					 nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
 					 outclts, labelts, proxts, errts,inbag);
 					
-					double *counttrnew      = (double *) S_alloc(4 * nsample, sizeof(double));
-					zeroDouble(counttrnew, 4 * nsample);
-					
 					int s = 0;
 					for (int j=0;j<4;j++){
 						printf("%d",j);
@@ -135,8 +135,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					
 					graph[i*mdim+i] = 0.0;
 					graph[i*mdim+j] = sum/nsample;
-					graph[j*mdim+i] = sum/nsample;				  
-					 
+					graph[j*mdim+i] = sum/nsample;				  			 
 		}
 	}
 }
