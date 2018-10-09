@@ -62,8 +62,6 @@ void regRFMultiRes2(double *x, int *xdim, int *sampsize,
           
 
            ) {
-
-  for (int n=0;n<100;n++) printf("%d,",x[n]);
   int nsample = xdim[0];
   int mdim = xdim[1];
   int ninds[mdim];
