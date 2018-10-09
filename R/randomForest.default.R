@@ -13,7 +13,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
              proximity, oob.prox=proximity,
              norm.votes=TRUE, do.trace=FALSE,
              keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
-             keep.inbag=FALSE, subdim=floor(ncol(x)/2), niter =100, partition = 6,...) {
+             keep.inbag=FALSE, subdim=floor(ncol(x)/2), niter = 10, partition = 6,...) {
 	
 	addclass = FALSE
     n <- nrow(x)
@@ -77,7 +77,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
         ncat <- rep(1, p)
 		names(ncat) <- colnames(x)
         xlevels <- as.list(rep(0, p))
-    }
+   
     maxcat <- max(ncat)
     if (maxcat > 53)
         stop("Can not handle categorical predictors with more than 53 categories.")
@@ -255,7 +255,7 @@ mylevels <- function(x) if (is.factor(x)) levels(x) else 0
                     inbag = if (keep.inbag)
                     matrix(integer(n * ntree), n) else integer(n),
 					graph= matrix(double(p*p), ncol=p),
-					normvotes = matrix(double(4*p), ncol = n),
+					normvotes = matrix(double(4*n), ncol = n),
                     DUP=FALSE,
                     PACKAGE="randomForest")[-1]
         if (keep.forest) {
