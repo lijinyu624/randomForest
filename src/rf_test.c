@@ -58,7 +58,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 	     int *outclts, int *labelts, double *proxts, double *errts,
              int *inbag, double *graph, double *counttsnew) {
 				 
-		for (int n=0;n<100;n++) printf("%d,",x[n]);
 				 
 		int mdim     = dimx[1];
 		int nsample  = dimx[0];
@@ -74,14 +73,14 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 			 for (int j=i+1;j<mdim;j++){
 				 printf("%d,%d ",i,j);
                     for(int n=0; n<nsample;n++) ynew[n]=x[i+n*mdim]*2 + x[j+n*mdim];
-					for (int n=0;n<nsample;n++) printf("%d,",ynew[n]);;
+					for (int n=0;n<nsample;n++) printf("%d,",ynew[n]);
 					int m = 0;
 					for (int s=0;s<xdimCount;s++){
 						if (m==i|m==j) m+=1;
 						for(int n=0; n<nsample;n++) xnew[s+n*nsample] = x[m+n*nsample];
 					}
 					
-					int *ncl = nsample;
+					int ncl = nsample;
 					for (int n=0; n<nsample;n++) {
 						if (ynew[n+1] == ynew[n]){
 							n = n+1;
