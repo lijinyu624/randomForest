@@ -77,15 +77,27 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 						for(int n=0; n<nsample;n++) xnew[s+n*nsample] = x[m+n*nsample];
 					}
 					
-					int ncl = nsample;
+					int ncl = 0;
+					int max = -1;
 					for (int n=0; n<nsample;n++) {
-						if (ynew[n+1] == ynew[n]){
-							n = n+1;
-							ncl = ncl-1;
+						if (max < ynew[i]){
+							max = ynew[i];
 						}
-						for (int m=n+1; m<nsample;m++){
-							if (ynew[m] == ynew[n]) ncl=ncl-1;
+					}
+					
+					int flag = 0;
+					for (int k=0; n<nsample) {
+						for (int n=0; n<nsample;n++){
+							if (ynew[n] == max){
+								if (flag == 0){
+									ncl++;
+									flag = 1;
+								}
+								k++;
+							}
 						}
+						max--;
+						flag = 0;
 					}		
 					printf("%d",ncl);
 					
