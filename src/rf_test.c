@@ -106,7 +106,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 							if(ynew[n] == j) exist = 1;
 						}
 						if (exist == 1){
-							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = counttr[n* *ncl + s] + 0.000001;
+							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = counttr[n*ncl + s] + 0.000001;
 							s = s+1;
 						}
 						if (exist == 0){
