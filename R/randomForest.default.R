@@ -155,6 +155,55 @@ n <- nrow(x)
     Stratify <- length(sampsize) > 1
     if ((!Stratify) && sampsize > nrow(x)) stop("sampsize too large")
     if (Stratify && (!classRF)) stop("sampsize should be of length one")
+	
+	    if (classRF) {
+        if (Stratify) {
+            if (missing(strata)) strata <- y
+            if (!is.factor(strata)) strata <- as.factor(strata)
+            nsum <- sum(sampsize)
+            if (length(sampsize) > nlevels(strata))
+                stop("sampsize has too many elements.")
+            if (any(sampsize <= 0) || nsum == 0)
+                stop("Bad sampsize specification")
+            ## If sampsize has names, match to class labels.
+            if (!is.null(names(sampsize))) {
+                sampsize <- sampsize[levels(strata)]
+            }
+            if (any(sampsize > table(strata)))
+              stop("sampsize can not be larger than class frequency")
+        } else {
+            nsum <- sampsize
+        }
+        nrnodes <- 2 * trunc(nsum / nodesize) + 1
+    } else {
+        ## For regression trees, need to do this to get maximal trees.
+        nrnodes <- 2 * trunc(sampsize/max(1, nodesize - 4)) + 1
+    }
+    if (!is.null(maxnodes)) {
+        ## convert # of terminal nodes to total # of nodes
+        maxnodes <- 2 * maxnodes - 1
+        if (maxnodes > nrnodes) warning("maxnodes exceeds its max value.")
+        nrnodes <- min(c(nrnodes, max(c(maxnodes, 1))))
+    }
+    ## Compiled code expects variables in rows and observations in columns.
+    x <- t(x)
+    storage.mode(x) <- "double"
+    if (testdat) {
+        xtest <- t(xtest)
+        storage.mode(xtest) <- "double"
+        if (is.null(ytest)) {
+            ytest <- labelts <- 0
+        } else {
+            labelts <- TRUE
+        }
+    } else {
+        xtest <- double(1)
+        ytest <- double(1)
+        ntest <- 1
+        labelts <- FALSE
+    }
+    nt <- if (keep.forest) ntree else 1
+	
     if (classRF) {
         cwt <- classwt
         threshold <- cutoff
