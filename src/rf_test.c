@@ -81,6 +81,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					
 					int ncl = 0;
 					int max = -1;
+					printf("%d,%d ",ncl,max);
 					for (int n=0; n<nsample;n++) {
 						if (max < ynew[i]){
 							max = ynew[i];
