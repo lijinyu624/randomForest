@@ -120,28 +120,43 @@ void classRFIsingGraph(int *x, int *dimx, int *cat, int *maxcat,
 					 nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
 					 outclts, labelts, proxts, errts,inbag);
 					 
+					 
+					 //normalize counttr
+					 int colsum[nsample];
+					 for (int n=0; n<nsample;n++){
+						 colsum[n] = 0;
+						 for (int j=0;j<ncl;j++){
+							 colsum[n] += counttr[n*ncl+j];
+						 }
+					 }
+					 
+					 for (int j=0;j<ncl;j++){
+						for (int n=0; n<nsample;n++) counttr[n*ncl+j] /= colsum[n];
+					 }
+						 
+					 
 					 int s = 0;
 					 printf("%d",s);
 					for (int j=0;j<4;j++){
 						printf("%d",j);
 						int exist = 0;
-						for (int n=0; n<nsample;n++){
-							if(ynew[n] == j) exist = 1;
-						}
+						for (int n=0; n<nsample;n++) if(ynew[n] == j) exist = 1;
 						if (exist == 1){
 							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = counttr[n*ncl + s] + 0.000001;
 							s = s+1;
 						}
 						if (exist == 0){
-							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = 0.0 + + 0.000001;
+							for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = 0.0 + 0.000001;
 						}
 					}
+					
+					
 					printf("%d",s);
 					int sum = 0;
 					double logg[nsample];
 					for (int n=0; n<nsample;n++){
 						logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
-						sum = sum - logg[n];
+						sum -= logg[n];
 					}
 					
 					graph[i*mdim+i] = 0.0;
@@ -234,7 +249,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     keepInbag = Options[9];
     mdim     = dimx[1];
     nsample0 = dimx[0];
-    nclass   = (*ncl==1) ? 2 : *ncl;;
+    nclass   = (*ncl==1) ? 2 : *ncl;
     ndsize   = *nodesize;
     Ntree    = *ntree;
     mtry     = *nvar;
@@ -497,19 +512,11 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 				noutall++;
 			}
 		}
-		
-		for (n = 0; n < nsample; ++n) {
-			for (j = 0; j < nclass; ++j) {
-	    	  counttr[j + n*nclass] = counttr[j + n*nclass] / out[n];
-			}
-		}
 
         /* Compute out-of-bag error rate. */
 		oob(nsample, nclass, cl, jtr, jerr, counttr, out,
 			errtr + jb*(nclass+1), outcl, cut);
-		
-		
-		
+
 		if ((jb+1) % trace == 0) {
 			Rprintf("%5i: %6.2f%%", jb+1, 100.0*errtr[jb * (nclass+1)]);
 			for (n = 1; n <= nclass; ++n) {
