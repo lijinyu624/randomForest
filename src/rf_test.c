@@ -75,19 +75,7 @@ void classRFIsingGraph(int *x, int *dimx, int *cat, int *maxcat,
 				 Rprintf("%d,%d ",i,j);
                     for(int n=0; n<nsample;n++) ynew[n]=x[i+n*mdim]*2 + x[j+n*mdim];
 					
-					int flagy = 0;
-					int t = 0;
-					for (int m=0;m<mdim;m++){
-						if (m == i|m == j){
-							flagy = 1;
-						}
-						if (flagy == 0){
-						for(int n=0; n<nsample;n++) xnew[t+n*mdim] = x[m+n*mdim];
-						t++;
-						}
-						flagy = 0;
-					}
-					
+
 					
 					int ncl = 0;
 					int max = -1;
