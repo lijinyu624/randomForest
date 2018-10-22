@@ -259,7 +259,7 @@ n <- nrow(x)
 					graph= matrix(double(p*p), ncol=p),
 					normvotes = matrix(double(4*n), ncol = n),
                     DUP=FALSE,
-                    PACKAGE="randomForest")[-1]
+                    PACKAGE="randomForest")
         if (keep.forest) {
             ## deal with the random forest outputs
             max.nodes <- max(rfout$ndbigtree)

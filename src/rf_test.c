@@ -47,7 +47,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 	     int *outclts, int *labelts, double *proxts, double *errts,
              int *inbag);
 
-void classRFIsingGraph(int *x, int *dimx, int *cat, int *maxcat,
+void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 	     int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
 	     int *ipi, double *classwt, double *cut, int *nodesize,
 	     int *outcl, int *counttr, double *prox,
@@ -60,7 +60,7 @@ void classRFIsingGraph(int *x, int *dimx, int *cat, int *maxcat,
 				 
 		int mdim     = dimx[1];
 		int nsample  = dimx[0];
-		int xdimCount=mdim-2;
+		int xdimCount= mdim-2;
 		int xdimnew[2]={nsample,xdimCount};
 		
 		zeroDouble(graph,mdim*mdim);
@@ -69,38 +69,42 @@ void classRFIsingGraph(int *x, int *dimx, int *cat, int *maxcat,
 		double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
 		int ynew[nsample];
 		
-
+		
 		 for(int i=0; i< (mdim-1);i++){
 			 for (int j=i+1;j<mdim;j++){
 				 Rprintf("%d,%d ",i,j);
+					//y vector: 2*x[i] + x[j]
                     for(int n=0; n<nsample;n++) ynew[n]=x[i+n*mdim]*2 + x[j+n*mdim];
 					
-
-					
-					int ncl = 0;
-					int max = -1;
-					for (int n=0; n<nsample;n++) {
-						if (max < ynew[i]){
-							max = ynew[i];
+					//x matrix (n x (p-2)) except i, jth columns
+					int flagy = 0;
+					int t = 0;
+					for (int m=0;m<mdim;m++){
+						if (m == i|m == j){
+							flagy = 1;
 						}
+						if (flagy == 0){
+						for(int n=0; n<nsample;n++) xnew[t+n*mdim] = x[m+n*mdim];
+						t++;
+						}
+						flagy = 0;
 					}
 					
-					int flag = 0;
-					for (int k=0; k<nsample;) {
-						for (int n=0; n<nsample;n++){
-							if (ynew[n] == max){
-								if (flag == 0){
-									ncl++;
-									flag = 1;
-								}
-								k++;
-							}
-						}
-						max--;
-						flag = 0;
+					// actual number of classes in the data: ncl (number of distinct values in y)
+					int ncl = 0;
+					for (int k=0; k<nsample;k++) {
+					  for (int n=0; n<nsample;n++){
+					   // Rprintf("%d",nsample);
+						if (ynew[k] == ynew[n])
+						   break;
+						if(k==n)
+						   ncl++;
+						
+					  }
 					}		
 					Rprintf("%d",ncl);
 					
+					// predict using RF classification
 					classRF(xnew, xdimnew, ynew, ncl, cat, maxcat,
 					 sampsize, strata, Options, ntree, nvar,
 					 ipi, classwt, cut, nodesize, outcl, counttr, prox,
@@ -122,7 +126,7 @@ void classRFIsingGraph(int *x, int *dimx, int *cat, int *maxcat,
 						for (int n=0; n<nsample;n++) counttr[n*ncl+j] /= colsum[n];
 					 }
 						 
-					 
+					 //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
 					 int s = 0;
 					 printf("%d",s);
 					for (int j=0;j<4;j++){
@@ -138,7 +142,7 @@ void classRFIsingGraph(int *x, int *dimx, int *cat, int *maxcat,
 						}
 					}
 					
-					
+					// claculate the graph parameters.
 					printf("%d",s);
 					int sum = 0;
 					double logg[nsample];
