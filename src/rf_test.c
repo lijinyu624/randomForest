@@ -93,15 +93,14 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					// actual number of classes in the data: ncl (number of distinct values in y)
 					int ncl = 0;
 					for (int k=0; k<nsample;k++) {
-					  for (int n=0; n<nsample;n++){
-					   // Rprintf("%d",nsample);
-						if (ynew[k] == ynew[n])
-						   break;
-						if(k==n)
-						   ncl++;
-						
-					  }
-					}		
+						  for (int n=0; n<k;n++){
+							if (ynew[k] == ynew[n])
+							   break;
+							if(k==n)
+							   ncl++;
+							
+						  }
+						}
 					Rprintf("%d",ncl);
 					
 					// predict using RF classification
