@@ -75,7 +75,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 				 Rprintf("%d,%d ",i,j);
 					//y vector: 2*x[i] + x[j]
                     for(int n=0; n<nsample;n++) ynew[n]=x[i+n*mdim]*2 + x[j+n*mdim];
-					
+					for(int n=0; n<nsample;n++) Rprintf("%d",ynew[n]);
 					//x matrix (n x (p-2)) except i, jth columns
 					int flagy = 0;
 					int t = 0;
@@ -91,16 +91,29 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					}
 					
 					// actual number of classes in the data: ncl (number of distinct values in y)
+					// actual number of classes in the data: ncl (number of distinct values in y)
 					int ncl = 0;
-					for (int k=0; k<nsample;k++) {
-						  for (int n=0; n<k;n++){
-							if (ynew[k] == ynew[n])
-							   break;
-							if(k==n)
-							   ncl++;
-							
-						  }
+					int max = -1;
+					for (int n=0; n<nsample;n++) {
+						if (max < ynew[i]){
+							max = ynew[i];
 						}
+					}
+					
+					int flag = 0;
+					for (int k=0; k<nsample;) {
+						for (int n=0; n<nsample;n++){
+							if (ynew[n] == max){
+								if (flag == 0){
+									ncl++;
+									flag = 1;
+								}
+								k++;
+							}
+						}
+						max--;
+						flag = 0;
+					}		
 					Rprintf("%d",ncl);
 					
 					// predict using RF classification
