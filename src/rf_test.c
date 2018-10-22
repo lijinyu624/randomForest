@@ -77,8 +77,8 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
                     for(int n=0; n<nsample;n++) ynew[n]=x[i+n*mdim]*2 + x[j+n*mdim];
 					
 					// actual number of classes in the data: ncl (number of distinct values in y)
-					int ncl=0;
-					for (int k=0; k<nsample;k++) {
+					int ncl=;
+					for (int k=1; k<nsample;k++) {
 						  for (int n=0; n<k+1;n++){
 
 						   // Rprintf("%d",nsample);
