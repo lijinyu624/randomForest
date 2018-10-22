@@ -94,7 +94,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 							flagy = 1;
 						}
 						if (flagy == 0){
-						for(int n=0; n<nsample;n++) xnew[t+n*mdim] = x[m+n*mdim];
+						for(int n=0; n<nsample;n++) xnew[t+n*xdimCount] = x[m+n*mdim];
 						t++;
 						}
 						flagy = 0;
