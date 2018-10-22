@@ -79,11 +79,9 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					// actual number of classes in the data: ncl (number of distinct values in y)
 					int ncl=1;
 					for (int k=1; k<nsample;k++) {
-						  for (int n=0; n<k+1;n++){
-
-						    Rprintf("%d",n);
+						  for (int n=0; n<k;n++){
 							if (ynew[k] == ynew[n]) break;
-							if(k==n) ncl++;	
+							if (n == k-1) ncl++;
 						  }
 						}
 					Rprintf("%d",ncl);
