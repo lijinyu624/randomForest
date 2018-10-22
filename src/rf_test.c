@@ -81,15 +81,13 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					for (int k=1; k<nsample;k++) {
 						  for (int n=0; n<k+1;n++){
 
-						   // Rprintf("%d",nsample);
-							if (ynew[k] == ynew[n])
-							   break;
-							if(k==n)
-							   ncl++;
-							
+						    Rprintf("%d",n);
+							if (ynew[k] == ynew[n]) break;
+							if(k==n) ncl++;	
 						  }
 						}
 					Rprintf("%d",ncl);
+					
 					//x matrix (n x (p-2)) except i, jth columns
 					int flagy = 0;
 					int t = 0;
