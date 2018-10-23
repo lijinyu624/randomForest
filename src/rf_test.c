@@ -213,7 +213,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 						}
 		  
 		  
-		    Rprintf("%d/n",&ncl);
+		    Rprintf("%d,",ncl);
 		   
 		   // predict using RF classification
 		   classRF(xnew, xdimnew, ynew, &ncl, cat, maxcat,
@@ -246,9 +246,9 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		   
 		   //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
 		   int s = 0;
-		   printf("%d",s);
+		   //printf("%d",s);
 		   for (int j=0;j<4;j++){
-		     printf("%d",j);
+		     //printf("%d",j);
 		     int exist = 0;
 		     for (int n=0; n<nsample;n++) if(ynew[n] == j) exist = 1;
 		     if (exist == 1){
@@ -261,7 +261,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		   }
 		   
 		   // claculate the graph parameters.
-		   printf("%d/n",s);
+		   //printf("%d/n",s);
 		   int sum = 0;
 		   double logg[nsample];
 		   for (int n=0; n<nsample;n++){
