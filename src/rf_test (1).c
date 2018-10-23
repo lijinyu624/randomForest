@@ -203,35 +203,17 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		      flagy = 0;
 		    }
 		    
-		    // actual number of classes in the data: ncl (number of distinct values in y)
-		    int ncl = 0;
-		    int max = -1;
-		    for (int n=0; n<nsample;n++) {
-		      if (max < ynew[i]){
-		        max = ynew[i];
-		      }
-		    }
-		    
-		    
-		    
-		    int flag = 0;
-		    for (int k=0; k<nsample;k++) {
-		      //Rprintf("(%d),",nsample);
-		      for (int n=0; n<nsample;n++){
-		       // Rprintf("%d",nsample);
-		        if (ynew[k] == ynew[n])
-		           break;
-		        if(k==n-1)
-		           ncl++;
-		        
-		         
-		        
-		      }
-		   
-		    }	
+					// actual number of classes in the data: ncl (number of distinct values in y)
+					int ncl=1;
+					for (int k=1; k<nsample;k++) {
+						  for (int n=0; n<k;n++){
+							if (ynew[k] == ynew[n]) break;
+							if (n == k-1) ncl++;
+						  }
+						}
 		  
 		  
-		    Rprintf("%d",&ncl);
+		    Rprintf("%d/n",&ncl);
 		   
 		   // predict using RF classification
 		   classRF(xnew, xdimnew, ynew, &ncl, cat, maxcat,
@@ -279,7 +261,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		   }
 		   
 		   // claculate the graph parameters.
-		   printf("%d",s);
+		   printf("%d/n",s);
 		   int sum = 0;
 		   double logg[nsample];
 		   for (int n=0; n<nsample;n++){
@@ -290,8 +272,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		   graph[i*mdim+i] = 0.0;
 		   graph[i*mdim+j] = sum/nsample;
 		   graph[j*mdim+i] = sum/nsample;	
-		  
-		  
 		  
 	
 	
