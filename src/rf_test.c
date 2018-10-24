@@ -262,7 +262,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		   
 		   // claculate the graph parameters.
 		   //printf("%d/n",s);
-		   int sum = 0;
+		   double sum = 0;
 		   double logg[nsample];
 		   for (int n=0; n<nsample;n++){
 		     logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
