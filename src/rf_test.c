@@ -237,7 +237,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		       colsum[n] += counttr[n*ncl+j];
 		     }
 		   }
-		   for  (int i=0; i<nsample*ncl;n++) Rprintf("%d,", counttr);
 		   for (int j=0;j<ncl;j++){
 		     for (int n=0; n<nsample;n++) 
 		       counttr[n*ncl+j] /= colsum[n];
@@ -245,20 +244,10 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		   
 		    //for  (int n=0; n<nsample;n++) Rprintf("%d,", colsum);
 		   //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
-		   int s = 0;
 		   //printf("%d",s);
 		   for (int j=0;j<4;j++){
-		     //printf("%d",j);
-		     int exist = 0;
-		     for (int n=0; n<nsample;n++) if(ynew[n] == j) exist = 1;
-		     if (exist == 1){
-		       for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = counttr[n*ncl + s] + 0.000001;
-		       s = s+1;
-		     }
-		     if (exist == 0){
-		       for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = 0.0 + 0.000001;
-		     }
-		   }
+		       for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = counttr[n*ncl + j] + 0.000001;		   
+			   }
 		   
 		   // claculate the graph parameters.
 		   //printf("%d/n",s);
