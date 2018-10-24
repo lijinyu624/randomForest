@@ -237,7 +237,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		       colsum[n] += counttr[n*ncl+j];
 		     }
 		   }
-		   
+		   for  (int i=0; i<nsample*ncl;n++) Rprintf("%d,", counttr);
 		   for (int j=0;j<ncl;j++){
 		     for (int n=0; n<nsample;n++) 
 		       counttr[n*ncl+j] /= colsum[n];
