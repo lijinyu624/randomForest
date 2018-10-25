@@ -204,38 +204,15 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		      flagy = 0;
 		    }
 		    
-		    // actual number of classes in the data: ncl (number of distinct values in y)
-		    int ncl = 0;
-		    int max = -1;
-		    for (int n=0; n<nsample;n++) {
-		      if (max < ynew[i]){
-		        max = ynew[i];
-		      }
-		    }
-		    
-		    
-		  
-		    int flag = 0;
-		    
-		   
-		    for (int k=0; k<nsample;k++) {
-		      //Rprintf("(%d),",k);
-		      for (int n=0; n<nsample;n++){
-		        //Rprintf("[%d]",n);
-		        if (ynew[k] == ynew[n]){
-		          //Rprintf("{%d}",ynew[k]);
-		            break;
-		          }
-		        if(n==k-1){
-		           ncl++;
-		          }
-		        
-		         
-		        
-		      }
-		   
-		    }
-		    Rprintf("+%d+",ncl);
+         // actual number of classes in the data: ncl (number of distinct values in y)
+					int ncl=1;
+					for (int k=1; k<nsample;k++) {
+						  for (int n=0; n<k;n++){
+							if (ynew[k] == ynew[n]) break;
+							if (n == k-1) ncl++;
+						  }
+						}
+					Rprintf("%d",ncl);
 			
 		    int ynew_exist[ncl];
 		    for(int i=0;i<ncl;i++)
@@ -270,7 +247,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		        colsum[n] += counttr[n*ncl+j];
 		      }
 		    }
-		 for (int n=0; n<nsample;n++) Rprintf("d%,",colsum[n]);
+		 for (int n=0; n<nsample;n++) printf("%d,",colsum[n]);
 		    for (int j=0;j<ncl;j++){
 		      for (int n=0; n<nsample;n++) 
 		        counttr[n*ncl+j] /= colsum[n];
