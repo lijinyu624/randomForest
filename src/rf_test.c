@@ -213,7 +213,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 							if (n == k-1) ncl++;
 						  }
 						}
-					Rprintf("%d,",ncl);
+					Rprintf("%d,",&ncl);
 			
 		    int ynew_exist[4];
 		    for(int i=0;i<4;i++)
