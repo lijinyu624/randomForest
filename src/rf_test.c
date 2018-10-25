@@ -225,12 +225,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
               ipi, classwt, cut, nodesize, outcl, counttr, prox,
               imprt, impsd, impmat, nrnodes, ndbigtree, nodestatus, bestvar, treemap,
               nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
-              outclts, labelts, proxts, errts,inbag,  
-              tgini,  wl,wr,classpop ,tclasscat ,tclasspop  ,
-              tx ,win , tp ,out , bestsplitnext ,bestsplit, nodepop,
-              nodestart, jin , nodex ,nodexts, ta , ncase , jerr ,
-              varUsed ,jtr, jvr , classFreq,jts , idmove,
-              at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
+              outclts, labelts, proxts, errts,inbag);
 		    
 			
 			 //normalize counttr
