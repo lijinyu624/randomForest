@@ -216,14 +216,14 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 					Rprintf("%d,",ncla);
 			
 		    int ynew_exist[4];
-		    for(int i=0;i<4;i++)
-		       ynew_exist[i]=0;
+		    for(int ii=0;ii<4;i++)
+		       ynew_exist[ii]=0;
 		 
 		    for (int k=0; k<nsample;k++) {
 		        if(ynew_exist[ynew[k]]==0)
 		          ynew_exist[ynew[k]]=1;
 		    }
-			for(int i=0;i<4;i++) Rprintf("yexist:%d,",ynew_exist[i]);
+			for(int ii=0;ii<4;ii++) Rprintf("yexist:%d,",ynew_exist[ii]);
 		    
 		    
 		    
@@ -257,12 +257,9 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 			}
 		    //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
 			for (int n=0; n<nsample;n++){
-		    for (int j=0;j<4;j++){
-		                 counttrnew[nsample*j+n] = counttr[nsample*j+n]/(colsum[n]+0.000001) + 0.000001;
+		    for (int jj=0;jj<4;jj++){
+		                 counttrnew[nsample*jj+n] = counttr[nsample*jj+n]/(colsum[n]+0.000001) + 0.000001;
 			}
-			}
-			if(i==8 & j ==9){
-		    for (int i=0; i<nsample*4;n++) Rprintf("%d,",counttrnew[i]);
 			}
 		    
 		    
