@@ -380,7 +380,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     keepInbag = Options[9];
     mdim     = dimx[1];
     nsample0 = dimx[0];
-    nclass   = (*ncl==1) ? 2 : *ncl;
+    nclass   = *ncl;
     ndsize   = *nodesize;
     Ntree    = *ntree;
     mtry     = *nvar;
