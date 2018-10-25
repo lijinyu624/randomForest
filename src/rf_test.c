@@ -238,7 +238,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
               varUsed ,jtr, jvr , classFreq,jts , idmove,
               at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
 		    
-		    for (int i=0;i<ncl*nsample;i++) print("%d,",counttr);
+		    for (int i=0;i<ncl*nsample;i++) printf("%d,",counttr);
 		    //normalize counttr
 		    int colsum[nsample];
 		    for (int n=0; n<nsample;n++){
