@@ -238,7 +238,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
               varUsed ,jtr, jvr , classFreq,jts , idmove,
               at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
 		    
-
+			 for (int n=0; n<nsample;n++) Rprintf("%d,",nout[n]);
 		    for (int j=0;j<ncl;j++){
 		      for (int n=0; n<nsample;n++) 
 		        counttr[nsample*j+n] /= nout[n];
