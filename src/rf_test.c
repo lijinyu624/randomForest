@@ -241,7 +241,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
               at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
 		    
 		    
-		    Rprintf("%d,",sizeof(counttr)/sizeof(counttr[0]));
+		    Rprintf("%d,",*(&counttr + 1) - counttr);
 		    
 		    //normalize counttr
 		    int colsum[nsample];
