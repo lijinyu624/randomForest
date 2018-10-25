@@ -64,7 +64,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
                        int *inbag, double *graph, double *counttrnew) {
 				 
 
-  int mdim     = dimx[0];
+						 int mdim     = dimx[0];
   int nsample  = dimx[1];
   int xdimCount= mdim-2;
   int xdimnew[2]={nsample,xdimCount};
@@ -76,7 +76,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		
 		
 		double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
-		//int *xnew      = (int *) S_alloc(nsample*xdimCount, sizeof(int));
 		int ynew[nsample];
 		
 		
@@ -85,7 +84,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		int nsample1 = addClass ? (nsample0 + nsample0) : nsample0;
 		int mdim1=xdimnew[1];
 		//int nclass   = (*ncla==1) ? 2 : *ncla;
-		int nclass=4;
+		int nclass=100;
 		int ntest    = *nts;
 		int oobprox  = Options[4];
 		int *  strata_size, * oobpair, * nind, * nclts;
@@ -102,6 +101,83 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		if (oobprox) {
 		  oobpair=(int*) S_alloc(near*near, sizeof(int));
 		}
+		
+		
+		
+
+		
+		
+		
+		double * tgini =      (double *) S_alloc(mdim1, sizeof(double));
+		double * wl =         (double *) S_alloc(nclass, sizeof(double));
+		double * wr =         (double *) S_alloc(nclass, sizeof(double));
+		double * classpop =   (double *) S_alloc(nclass* *nrnodes, sizeof(double));
+		double * tclasscat =  (double *) S_alloc(nclass*MAX_CAT, sizeof(double));
+		double * tclasspop =  (double *) S_alloc(nclass, sizeof(double));
+		double * tx =         (double *) S_alloc(nsample1, sizeof(double));
+		double * win =        (double *) S_alloc(nsample1, sizeof(double));
+		double * tp =         (double *) S_alloc(nsample1, sizeof(double));
+		
+		int * out =           (int *) S_alloc(nsample1, sizeof(int));
+		int * bestsplitnext = (int *) S_alloc(*nrnodes, sizeof(int));
+		int * bestsplit =     (int *) S_alloc(*nrnodes, sizeof(int));
+		int * nodepop =       (int *) S_alloc(*nrnodes, sizeof(int));
+		int * nodestart =     (int *) S_alloc(*nrnodes, sizeof(int));
+		int * jin =           (int *) S_alloc(nsample1, sizeof(int));
+		int * nodex =         (int *) S_alloc(nsample1, sizeof(int));
+		int * nodexts =       (int *) S_alloc(ntest, sizeof(int));
+		int * ta =            (int *) S_alloc(nsample1, sizeof(int));
+		int * ncase =         (int *) S_alloc(nsample1, sizeof(int));
+		int * jerr =          (int *) S_alloc(nsample1, sizeof(int));
+		int * varUsed =       (int *) S_alloc(mdim1, sizeof(int));
+		int * jtr =           (int *) S_alloc(nsample1, sizeof(int));
+		int * jvr =           (int *) S_alloc(nsample1, sizeof(int));
+		int * classFreq =     (int *) S_alloc(nclass, sizeof(int));
+		int * jts =           (int *) S_alloc(ntest, sizeof(int));
+		int * idmove =        (int *) S_alloc(nsample1, sizeof(int));
+		int * at =            (int *) S_alloc(mdim1*nsample1, sizeof(int));
+		int * a =             (int *) S_alloc(mdim1*nsample1, sizeof(int));
+		int * b =             (int *) S_alloc(mdim1*nsample1, sizeof(int));
+		int * mind =          (int *) S_alloc(mdim1, sizeof(int));
+		int * nright =        (int *) S_alloc(nclass, sizeof(int));
+		int * nrightimp =     (int *) S_alloc(nclass, sizeof(int));
+		int * nout =          (int *) S_alloc(nclass, sizeof(int));
+		
+		int n;
+		
+		
+		
+		
+		
+		
+		
+		
+		if (stratify) {
+		  /* Count number of strata and frequency of each stratum. */
+		  nstrata = 0;
+		  for (n = 0; n < nsample0; ++n)
+		    if (strata[n] > nstrata) nstrata = strata[n];
+		    /* Create the array of pointers, each pointing to a vector
+		    of indices of where data of each stratum is. */
+		    strata_size = (int  *) S_alloc(nstrata, sizeof(int));
+		    
+		    strata_idx =  (int **) S_alloc(nstrata, sizeof(int *));
+		    for (n = 0; n < nstrata; ++n) {
+		      strata_idx[n] = (int *) S_alloc(strata_size[n], sizeof(int));
+		    }
+		    
+		    
+		} else {
+		  nind = replace ? NULL : (int *) S_alloc(nsample, sizeof(int));
+		}
+		
+		
+		
+		if (*labelts) {
+		  nclts  = (int *) S_alloc(nclass, sizeof(int));
+		  
+		}
+		
 		
 		
 		
