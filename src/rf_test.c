@@ -79,11 +79,12 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		int ynew[nsample];
 		
 		
-		int nsample0 = dimx[0];
+		int nsample0 = xdimnew[0];
 		int addClass = Options[0];
 		int nsample1 = addClass ? (nsample0 + nsample0) : nsample0;
+		int mdim1=xdimnew[1];
 		//int nclass   = (*ncla==1) ? 2 : *ncla;
-		int nclass=5;
+		int nclass=100;
 		int ntest    = *nts;
 		int oobprox  = Options[4];
 		int *  strata_size, * oobpair, * nind, * nclts;
@@ -107,7 +108,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		
 		
 		
-		double * tgini =      (double *) S_alloc(mdim, sizeof(double));
+		double * tgini =      (double *) S_alloc(mdim1, sizeof(double));
 		double * wl =         (double *) S_alloc(nclass, sizeof(double));
 		double * wr =         (double *) S_alloc(nclass, sizeof(double));
 		double * classpop =   (double *) S_alloc(nclass* *nrnodes, sizeof(double));
@@ -128,16 +129,16 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		int * ta =            (int *) S_alloc(nsample1, sizeof(int));
 		int * ncase =         (int *) S_alloc(nsample1, sizeof(int));
 		int * jerr =          (int *) S_alloc(nsample1, sizeof(int));
-		int * varUsed =       (int *) S_alloc(mdim, sizeof(int));
+		int * varUsed =       (int *) S_alloc(mdim1, sizeof(int));
 		int * jtr =           (int *) S_alloc(nsample1, sizeof(int));
 		int * jvr =           (int *) S_alloc(nsample1, sizeof(int));
 		int * classFreq =     (int *) S_alloc(nclass, sizeof(int));
 		int * jts =           (int *) S_alloc(ntest, sizeof(int));
 		int * idmove =        (int *) S_alloc(nsample1, sizeof(int));
-		int * at =            (int *) S_alloc(mdim*nsample1, sizeof(int));
-		int * a =             (int *) S_alloc(mdim*nsample1, sizeof(int));
-		int * b =             (int *) S_alloc(mdim*nsample1, sizeof(int));
-		int * mind =          (int *) S_alloc(mdim, sizeof(int));
+		int * at =            (int *) S_alloc(mdim1*nsample1, sizeof(int));
+		int * a =             (int *) S_alloc(mdim1*nsample1, sizeof(int));
+		int * b =             (int *) S_alloc(mdim1*nsample1, sizeof(int));
+		int * mind =          (int *) S_alloc(mdim1, sizeof(int));
 		int * nright =        (int *) S_alloc(nclass, sizeof(int));
 		int * nrightimp =     (int *) S_alloc(nclass, sizeof(int));
 		int * nout =          (int *) S_alloc(nclass, sizeof(int));
@@ -203,73 +204,114 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		      flagy = 0;
 		    }
 		    
-					// actual number of classes in the data: ncl (number of distinct values in y)
-					int ncl=1;
-					for (int k=1; k<nsample;k++) {
-						  for (int n=0; n<k;n++){
-							if (ynew[k] == ynew[n]) break;
-							if (n == k-1) ncl++;
-						  }
-						}
+		    // actual number of classes in the data: ncl (number of distinct values in y)
+		    int ncl = 0;
+		    int max = -1;
+		    for (int n=0; n<nsample;n++) {
+		      if (max < ynew[i]){
+		        max = ynew[i];
+		      }
+		    }
+		    
+		    
+		  
+		    int flag = 0;
+		    
+		   
+		    for (int k=0; k<nsample;k++) {
+		      //Rprintf("(%d),",k);
+		      for (int n=0; n<nsample;n++){
+		        //Rprintf("[%d]",n);
+		        if (ynew[k] == ynew[n]){
+		          //Rprintf("{%d}",ynew[k]);
+		            break;
+		          }
+		        if(n==k-1){
+		           ncl++;
+		          //Rprintf("+%d+",&ncl);
+		          }
+		        
+		         
+		        
+		      }
+		   
+		    }
+		    
+		    int ynew_exist[ncl];
+		    for(int i=0;i<ncl;i++)
+		       ynew_exist=0;
+		 
+		    for (int k=0; k<nsample;k++) {
+		        if(ynew_exist[ynew[k]]==0)
+		          ynew_exist[ynew[k]]=1;
+		    }
+		    
+		    
+		    
+		    // predict using RF classification
+		    classRF(xnew, xdimnew, ynew, &ncl, cat, maxcat,
+              sampsize, strata, Options, ntree, nvar,
+              ipi, classwt, cut, nodesize, outcl, counttr, prox,
+              imprt, impsd, impmat, nrnodes, ndbigtree, nodestatus, bestvar, treemap,
+              nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
+              outclts, labelts, proxts, errts,inbag,  
+              tgini,  wl,wr,classpop ,tclasscat ,tclasspop  ,
+              tx ,win , tp ,out , bestsplitnext ,bestsplit, nodepop,
+              nodestart, jin , nodex ,nodexts, ta , ncase , jerr ,
+              varUsed ,jtr, jvr , classFreq,jts , idmove,
+              at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
+		    
+		    
+		    
+		    
+		    //normalize counttr
+		    int colsum[nsample];
+		    for (int n=0; n<nsample;n++){
+		      colsum[n] = 0;
+		      for (int j=0;j<ncl;j++){
+		        colsum[n] += counttr[n*ncl+j];
+		      }
+		    }
+		    for (int j=0;j<ncl;j++){
+		      for (int n=0; n<nsample;n++) 
+		        counttr[n*ncl+j] /= colsum[n];
+		    }
+		    
+		    
+		    //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
+		    int s = 0;
+		    printf("%d",s);
+		    for (int j=0;j<4;j++){
+		      for (int n=0; n<nsample;n++) 
+		           if(ynew_exist[j]==1)
+		                 counttrnew[n*4 + j] = counttr[n*ncl + j] + 0.000001;	
+		           else
+		             counttrnew[n*4 + j] =0;
+		    }
+		    
+		    
+		    
+		    
+		    // claculate the graph parameters.
+		    printf("%d",s);
+		    int sum = 0;
+		    double logg[nsample];
+		    for (int n=0; n<nsample;n++){
+		      logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
+		      sum -= logg[n];
+		    }
+		    
+		    graph[i*mdim+i] = 0.0;
+		    graph[i*mdim+j] = sum/nsample;
+		    graph[j*mdim+i] = sum/nsample;	
 		  
 		  
-		    Rprintf("%d,",ncl);
 		   
-		   // predict using RF classification
-		   classRF(xnew, xdimnew, ynew, &ncl, cat, maxcat,
-             sampsize, strata, Options, ntree, nvar,
-             ipi, classwt, cut, nodesize, outcl, counttr, prox,
-             imprt, impsd, impmat, nrnodes, ndbigtree, nodestatus, bestvar, treemap,
-             nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
-             outclts, labelts, proxts, errts,inbag,  
-             tgini,  wl,wr,classpop ,tclasscat ,tclasspop  ,
-             tx ,win , tp ,out , bestsplitnext ,bestsplit, nodepop,
-             nodestart, jin , nodex ,nodexts, ta , ncase , jerr ,
-             varUsed ,jtr, jvr , classFreq,jts , idmove,
-             at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
-		   
-		   
-		   //normalize counttr
-		   int colsum[nsample];
-		   for (int n=0; n<nsample;n++){
-		     colsum[n] = 0;
-		     for (int j=0;j<ncl;j++){
-		       colsum[n] += counttr[n*ncl+j];
-		     }
-		   }
-		   for (int j=0;j<ncl;j++){
-		     for (int n=0; n<nsample;n++) 
-		       counttr[n*ncl+j] /= colsum[n];
-		   }
-		   
-		    //for  (int n=0; n<nsample;n++) Rprintf("%d,", colsum);
-		   //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
-		   //printf("%d",s);
-		   for (int j=0;j<4;j++){
-		       for (int n=0; n<nsample;n++) counttrnew[n*4 + j] = counttr[n*ncl + j] + 0.000001;		   
-			   }
-		   
-		   // claculate the graph parameters.
-		   //printf("%d/n",s);
-		   double sum = 0;
-		   double logg[nsample];
-		   for (int n=0; n<nsample;n++){
-		     logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
-		     sum -= logg[n];
-		   }
-		   
-		   graph[i*mdim+i] = 0.0;
-		   graph[i*mdim+j] = sum/(2*nsample);
-		   graph[j*mdim+i] = sum/(2*nsample);	
-		  
 	
-	
+		
+		
 		  }
-		}
-		
-		
-		
-		
+		  }
 		
 		
 		
@@ -278,7 +320,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		
 		
 		
-		
+		Rprintf("over");
 		
 		 
 }
