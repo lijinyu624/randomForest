@@ -223,7 +223,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		          ynew_exist[ynew[k]]=1;
 		    }
 		    
-		   for (int j; j<ncl;j++) Rprintf("%d,",ynew_exist[ncl]);
+		   for (int j; j<ncl;j++) Rprintf("%d,",ynew_exist[j]);
 			
 		    
 		    // predict using RF classification
