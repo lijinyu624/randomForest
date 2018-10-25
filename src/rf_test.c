@@ -239,7 +239,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    
 		    int ynew_exist[ncl];
 		    for(int i=0;i<ncl;i++)
-		       ynew_exist=0;
+		       ynew_exist[i]=0;
 		 
 		    for (int k=0; k<nsample;k++) {
 		        if(ynew_exist[ynew[k]]==0)
