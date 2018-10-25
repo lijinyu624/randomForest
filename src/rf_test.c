@@ -27,7 +27,7 @@ Modifications to get the forest out Matt Wiener Feb. 26, 2002.
 #include <math.h>
 
 void oob(int nsample, int nclass, int *cl, int *jtr,int *jerr,
-         int *counttr, int *out, double *errtr, int *jest, double *cutoff);
+         double *counttr, int *out, double *errtr, int *jest, double *cutoff);
 
 void TestSetError(double *countts, int *jts, int *clts, int *jet, int ntest,
 		  int nclass, int nvote, double *errts,
