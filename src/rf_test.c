@@ -250,6 +250,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		      for (int j=0;j<ncl;j++){
 		        colsum[n] += counttr[n*ncl+j];
 		      }
+			}
 		    
 		    
 		    //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
