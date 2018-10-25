@@ -610,7 +610,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
       for (n = 0; n < nsample; ++n) {
         if (jin[n] == 0) {
           /* increment the OOB votes */
-          counttr[n*nclass + jtr[n] - 1] ++;
+          counttr[n*nclass + jtr[n]] ++;
           /* count number of times a case is OOB */
           out[n]++;
           /* count number of OOB cases in the current iteration.
