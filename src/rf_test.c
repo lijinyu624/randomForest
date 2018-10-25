@@ -380,8 +380,8 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     replace  = Options[7];
     stratify = Options[8];
     keepInbag = Options[9];
-    mdim     = dimx[1];
-    nsample0 = dimx[0];
+    mdim     = dimx[0];
+    nsample0 = dimx[1];
     nclass   = (*ncl==1) ? 2 : *ncl;
     ndsize   = *nodesize;
     Ntree    = *ntree;
