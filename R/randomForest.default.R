@@ -257,7 +257,7 @@ n <- nrow(x)
                     inbag = if (keep.inbag)
                     matrix(integer(n * ntree), n) else integer(n),
 					graph= matrix(double(p*p), ncol=p),
-					normvotes = matrix(double(4*n), ncol = n),
+					normvotes = matrix(double(n*4), ncol = 4),
                     DUP=FALSE,
                     PACKAGE="randomForest")
         if (keep.forest) {

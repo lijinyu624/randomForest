@@ -73,7 +73,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
   //double* graph= (double *) S_alloc(mdim*mdim, sizeof(double));
   //double* counttrnew= (double *) S_alloc(4*nsample, sizeof(double));
   zeroDouble(graph,mdim*mdim);
-  zeroDouble(counttrnew, 4 * nsample);
+  zeroDouble(counttrnew, nsample*4);
 		
 		
 		double *xnew      = (double *) S_alloc(nsample * xdimCount, sizeof(double));
@@ -259,7 +259,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
 			for (int n=0; n<nsample;n++){
 		    for (int jj=0;jj<4;jj++){
-		                 counttrnew[nsample*jj+n] = counttr[nsample*jj+n]/(colsum[n]+0.000001) + 0.000001;
+		                 counttrnew[n*4+jj] = counttr[n*4+jj]/(colsum[n]+0.000001) + 0.000001;
 			}
 			}
 		    
@@ -270,7 +270,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
             double sum = 0;
 					double logg[nsample];
 					for (int n=0; n<nsample;n++){
-						logg[n] = log(counttrnew[nsample*0+n]* counttrnew[nsample*3+n]/(counttrnew[nsample*1+n]*counttrnew[n*2+n]));
+						logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
 						sum -= logg[n];
 					}
 		    graph[i*mdim+i] = 0.0;
