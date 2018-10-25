@@ -75,7 +75,8 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
   zeroDouble(counttrnew, 4 * nsample);
 		
 		
-		double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
+		//double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
+		int double *xnew      = (int *) S_alloc(xdimCount* nsample, sizeof(int));
 		int ynew[nsample];
 		
 		
@@ -222,8 +223,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		        if(ynew_exist[ynew[k]]==0)
 		          ynew_exist[ynew[k]]=1;
 		    }
-		    
-		   for (int j; j<ncl;j++) Rprintf("%d,",ynew_exist[j]);
 			
 		    
 		    // predict using RF classification
@@ -434,7 +433,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     
     /*    INITIALIZE FOR RUN */
     if (*testdat) zeroDouble(countts, ntest * nclass);
-    zeroInt(counttr, *ncl * nsample);
+    zeroDouble(counttr, *ncl * nsample);
     zeroInt(out, nsample);
     zeroDouble(tgini, mdim);
     zeroDouble(errtr, (nclass + 1) * Ntree);
