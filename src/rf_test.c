@@ -76,7 +76,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		
 		
 		//double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
-		int double *xnew      = (int *) S_alloc(xdimCount* nsample, sizeof(int));
+		int *xnew      = (int *) S_alloc(xdimCount* nsample, sizeof(int));
 		int ynew[nsample];
 		
 		
