@@ -248,7 +248,8 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    for (int n=0; n<nsample;n++){
 		      colsum[n] = 0;
 		      for (int jj=0;jj<ncla;jj++){
-		        colsum[n]+=counttr[nsample*jj+n];
+		        //colsum[n]+=counttr[nsample*jj+n];
+				colsum[n]+=counttr[n*ncla+jj];
 		      }
 		    }
 			
