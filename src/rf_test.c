@@ -50,8 +50,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
              double * tx ,double * win ,double * tp ,int * out ,int * bestsplitnext ,int * bestsplit,int * nodepop,
              int * nodestart,int * jin ,int * nodex ,int * nodexts,int * ta ,int * ncase ,int * jerr ,
              int * varUsed ,int * jtr,int * jvr ,int * classFreq,int * jts ,int * idmove,
-             int * at ,int * a,int * b,int * mind, int* nright, int* nrightimp, int * nout, int* oobpair,int*  strata_size,int**  strata_idx,int* nind, int* nclts );
-			 
+             int * at ,int * a,int * b,int * mind, int* nright, int* nrightimp, int * nout, int* oobpair,int*  strata_size,int**  strata_idx,int* nind, int* nclts );			 
 			 
 void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
                        int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
@@ -150,12 +149,17 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 			
 		    
 		    // predict using RF classification
-		    classRF(xnew, xdimnew, ynew, &ncl, cat, maxcat,
+		     classRF(xnew, xdimnew, ynew, &ncl, cat, maxcat,
               sampsize, strata, Options, ntree, nvar,
               ipi, classwt, cut, nodesize, outcl, counttr, prox,
               imprt, impsd, impmat, nrnodes, ndbigtree, nodestatus, bestvar, treemap,
               nodeclass, xbestsplit, errtr,testdat,xts, clts,nts, countts,
-              outclts, labelts, proxts, errts,inbag);
+              outclts, labelts, proxts, errts,inbag,  
+              tgini,  wl,wr,classpop ,tclasscat ,tclasspop  ,
+              tx ,win , tp ,out , bestsplitnext ,bestsplit, nodepop,
+              nodestart, jin , nodex ,nodexts, ta , ncase , jerr ,
+              varUsed ,jtr, jvr , classFreq,jts , idmove,
+              at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
 		    
 			
 			 //normalize counttr
