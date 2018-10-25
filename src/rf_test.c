@@ -65,8 +65,8 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
                        int *inbag, double *graph, double *counttrnew) {
 				 
 
-				 int mdim     = dimx[0];
-  int nsample  = dimx[1];
+				 int mdim     = dimx[1];
+  int nsample  = dimx[0];
   int xdimCount= mdim-2;
   int xdimnew[2]={xdimCount, nsample};
   
@@ -80,10 +80,10 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		int ynew[nsample];
 		
 		
-		int nsample0 = xdimnew[1];
-		int addClass = Options[0];
+		int nsample0 = xdimnew[0];
+		int addClass = Options[1];
 		int nsample1 = addClass ? (nsample0 + nsample0) : nsample0;
-		int mdim1=xdimnew[0];
+		int mdim1=xdimnew[1];
 		//int nclass   = (*ncla==1) ? 2 : *ncla;
 		int nclass=4;
 		int ntest    = *nts;
@@ -380,8 +380,8 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     replace  = Options[7];
     stratify = Options[8];
     keepInbag = Options[9];
-    mdim     = dimx[0];
-    nsample0 = dimx[1];
+    mdim     = dimx[1];
+    nsample0 = dimx[0];
     nclass   = (*ncl==1) ? 2 : *ncl;
     ndsize   = *nodesize;
     Ntree    = *ntree;
