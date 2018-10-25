@@ -254,7 +254,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 			
 			if(i==8 & j ==9){
 		    for (int n=0; n<nsample;n++) Rprintf("%d,",colsum[n]);
-		    for (int i=0; i<nsample*ncla;n++) Rprintf("%d,",counttr[i]);
 			}
 		    //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
 			for (int n=0; n<nsample;n++){
@@ -262,7 +261,9 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		                 counttrnew[nsample*j+n] = counttr[nsample*j+n]/(colsum[n]+0.000001) + 0.000001;
 			}
 			}
-
+			if(i==8 & j ==9){
+		    for (int i=0; i<nsample*4;n++) Rprintf("%d,",counttrnew[i]);
+			}
 		    
 		    
 		    
