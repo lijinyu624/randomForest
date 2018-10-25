@@ -84,7 +84,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		int nsample1 = addClass ? (nsample0 + nsample0) : nsample0;
 		int mdim1=xdimnew[1];
 		//int nclass   = (*ncla==1) ? 2 : *ncla;
-		int nclass=100;
+		//int nclass= *ncl;
 		int ntest    = *nts;
 		int oobprox  = Options[4];
 		int *  strata_size, * oobpair, * nind, * nclts;
