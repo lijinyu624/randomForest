@@ -238,19 +238,18 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
               varUsed ,jtr, jvr , classFreq,jts , idmove,
               at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
 		    
-		    for (int i=0;i<ncl*nsample;i++) printf("%d,",counttr);
 		    //normalize counttr
 		    int colsum[nsample];
 		    for (int n=0; n<nsample;n++){
 		      colsum[n] = 0;
 		      for (int j=0;j<ncl;j++){
-		        colsum[n] += counttr[n*ncl+j];
+		        if(counttr[nsample*j+n]) colsum[n]++;
 		      }
 		    }
 		 //for (int n=0; n<nsample;n++) printf("%d,",colsum[n]);
 		    for (int j=0;j<ncl;j++){
 		      for (int n=0; n<nsample;n++) 
-		        counttr[n*ncl+j] /= colsum[n];
+		        counttr[nsample*j+n] /= colsum[n];
 		    }
 		    
 		    
@@ -258,9 +257,9 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    for (int j=0;j<4;j++){
 		      for (int n=0; n<nsample;n++) 
 		           if(ynew_exist[j]==1)
-		                 counttrnew[n*4 + j] = counttr[n*ncl + j] + 0.000001;	
+		                 counttrnew[nsample*j+n] = counttr[nsample*j+n] + 0.000001;	
 		           else
-		             counttrnew[n*4 + j] =0.0+0.000001;
+		             counttrnew[nsample*j+n] =0.0+0.000001;
 		    }
 		    
 		    
@@ -270,7 +269,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    double sum = 0;
 		    double logg[nsample];
 		    for (int n=0; n<nsample;n++){
-		      logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
+		      logg[n] = log(counttrnew[nsample*0+n]* counttrnew[nsample*3+n]/(counttrnew[nsample*1+n]*counttrnew[nsample*2+n]));
 		      sum -= logg[n];
 		    }
 		    
