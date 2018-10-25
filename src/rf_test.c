@@ -228,7 +228,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    
 		    
 		    // predict using RF classification
-		    classRF(xnew, xdimnew, ynew, &ncl, cat, maxcat,
+		    classRF(xnew, xdimnew, ynew, ncl, cat, maxcat,
               sampsize, strata, Options, ntree, nvar,
               ipi, classwt, cut, nodesize, outcl, counttr, prox,
               imprt, impsd, impmat, nrnodes, ndbigtree, nodestatus, bestvar, treemap,
