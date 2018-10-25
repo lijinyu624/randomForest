@@ -36,7 +36,7 @@ void TestSetError(double *countts, int *jts, int *clts, int *jet, int ntest,
 /*  Define the R RNG for use from Fortran. */
 void F77_SUB(rrand)(double *r) { *r = unif_rand(); }
 
-void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
+void classRF(int *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 	     int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
 	     int *ipi, double *classwt, double *cut, int *nodesize,
 	     int *outcl, double *counttr, double *prox,
@@ -52,7 +52,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
              int * varUsed ,int * jtr,int * jvr ,int * classFreq,int * jts ,int * idmove,
              int * at ,int * a,int * b,int * mind, int* nright, int* nrightimp, int * nout, int* oobpair,int*  strata_size,int**  strata_idx,int* nind, int* nclts );
 
-void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
+void classRFIsingGraph(int *x, int *dimx, int *cat, int *maxcat,
                        int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
                        int *ipi, double *classwt, double *cut, int *nodesize,
                        int *outcl, double *counttr, double *prox,
@@ -76,7 +76,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		
 		
 		//double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
-		int *xnew      = (int *) S_alloc(xdimCount* nsample, sizeof(int));
+		int *xnew      = (int *) S_alloc(nsample*xdimCount, sizeof(int));
 		int ynew[nsample];
 		
 		
@@ -302,7 +302,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 }
 			 
 
-void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
+void classRF(int *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 	     int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
 	     int *ipi, double *classwt, double *cut, int *nodesize,
 	     int *outcl, double *counttr, double *prox,
