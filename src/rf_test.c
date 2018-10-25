@@ -206,14 +206,14 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    }
 		    
 		    // actual number of classes in the data: ncl (number of distinct values in y)
-					int ncl=1;
+					int ncla=1;
 					for (int k=1; k<nsample;k++) {
 						  for (int n=0; n<k;n++){
 							if (ynew[k] == ynew[n]) break;
-							if (n == k-1) ncl++;
+							if (n == k-1) ncla++;
 						  }
 						}
-					Rprintf("%d,",ncl);
+					Rprintf("%d,",ncla);
 			
 		    int ynew_exist[4];
 		    for(int i=0;i<4;i++)
@@ -228,7 +228,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    
 		    
 		    // predict using RF classification
-		    classRF(xnew, xdimnew, ynew, ncl, cat, maxcat,
+		    classRF(xnew, xdimnew, ynew, ncla, cat, maxcat,
               sampsize, strata, Options, ntree, nvar,
               ipi, classwt, cut, nodesize, outcl, counttr, prox,
               imprt, impsd, impmat, nrnodes, ndbigtree, nodestatus, bestvar, treemap,
@@ -247,7 +247,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    int colsum[nsample];
 		    for (int n=0; n<nsample;n++){
 		      colsum[n] = 0;
-		      for (int j=0;j<ncl;j++){
+		      for (int j=0;j<ncla;j++){
 		        colsum[n]+=counttr[nsample*j+n];
 		      }
 		    }
