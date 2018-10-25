@@ -35,7 +35,7 @@ void TestSetError(double *countts, int *jts, int *clts, int *jet, int ntest,
 
 /*  Define the R RNG for use from Fortran. */
 void F77_SUB(rrand)(double *r) { *r = unif_rand(); }
-
+	 
 void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 	     int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
 	     int *ipi, double *classwt, double *cut, int *nodesize,
@@ -44,13 +44,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 	     int *ndbigtree, int *nodestatus, int *bestvar, int *treemap,
 	     int *nodeclass, double *xbestsplit, double *errtr,
 	     int *testdat, double *xts, int *clts, int *nts, double *countts,
-	     int *outclts, int *labelts, double *proxts, double *errts,int *inbag,
-	     
-             double * tgini, double * wl,double *wr,double *classpop ,double *tclasscat ,double *tclasspop  ,
-             double * tx ,double * win ,double * tp ,int * out ,int * bestsplitnext ,int * bestsplit,int * nodepop,
-             int * nodestart,int * jin ,int * nodex ,int * nodexts,int * ta ,int * ncase ,int * jerr ,
-             int * varUsed ,int * jtr,int * jvr ,int * classFreq,int * jts ,int * idmove,
-             int * at ,int * a,int * b,int * mind, int* nright, int* nrightimp, int * nout, int* oobpair,int*  strata_size,int**  strata_idx,int* nind, int* nclts );
+	     int *outclts, int *labelts, double *proxts, double *errts,int *inbag);
 
 void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
                        int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
