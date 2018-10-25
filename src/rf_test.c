@@ -992,5 +992,3 @@ void TestSetError(double *countts, int *jts, int *clts, int *jet, int ntest,
 		for (n = 1; n <= nclass; ++n) errts[n] /= nclts[n-1];
     }
 }
-rf_test.c
-当前显示rf_test.c。
