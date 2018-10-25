@@ -68,7 +68,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 				 int mdim     = dimx[1];
   int nsample  = dimx[0];
   int xdimCount= mdim-2;
-  int xdimnew[2]={xdimCount, nsample};
+  int xdimnew[2]={nsample, xdimCount};
   
   //double* graph= (double *) S_alloc(mdim*mdim, sizeof(double));
   //double* counttrnew= (double *) S_alloc(4*nsample, sizeof(double));
