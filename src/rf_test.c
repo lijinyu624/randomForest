@@ -429,7 +429,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     
     /*    INITIALIZE FOR RUN */
     if (*testdat) zeroDouble(countts, ntest * nclass);
-    zeroInt(counttr, nclass * nsample);
+    zeroInt(counttr, ncl * nsample);
     zeroInt(out, nsample);
     zeroDouble(tgini, mdim);
     zeroDouble(errtr, (nclass + 1) * Ntree);
