@@ -262,8 +262,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
               at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
 		    
 		    
-		    
-		    
 		    //normalize counttr
 		    int colsum[nsample];
 		    for (int n=0; n<nsample;n++){
@@ -279,21 +277,18 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    
 		    
 		    //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
-		    int s = 0;
-		    printf("%d",s);
 		    for (int j=0;j<4;j++){
 		      for (int n=0; n<nsample;n++) 
 		           if(ynew_exist[j]==1)
 		                 counttrnew[n*4 + j] = counttr[n*ncl + j] + 0.000001;	
 		           else
-		             counttrnew[n*4 + j] =0;
+		             counttrnew[n*4 + j] =0.0+0.000001;
 		    }
 		    
 		    
 		    
 		    
 		    // claculate the graph parameters.
-		    printf("%d",s);
 		    int sum = 0;
 		    double logg[nsample];
 		    for (int n=0; n<nsample;n++){
@@ -302,8 +297,8 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    }
 		    
 		    graph[i*mdim+i] = 0.0;
-		    graph[i*mdim+j] = sum/nsample;
-		    graph[j*mdim+i] = sum/nsample;	
+		    graph[i*mdim+j] = sum/(2*nsample);
+		    graph[j*mdim+i] = sum/(2*nsample);	
 		  
 		  
 		   
