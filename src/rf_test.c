@@ -383,7 +383,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
     Ntree    = *ntree;
     mtry     = *nvar;
     ntest    = *nts;
-    nsample = addClass ? (nsample0 + nsample0) : nsample0;
+    //nsample = addClass ? (nsample0 + nsample0) : nsample0;
     nsample=nsample0;//nsample has to be equal to nsample
     mimp = imp ? mdim : 1;
     nimp = imp ? nsample : 1;
