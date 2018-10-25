@@ -213,7 +213,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 							if (n == k-1) ncl++;
 						  }
 						}
-					Rprintf("%d",ncl);
+					Rprintf("%d,",ncl);
 			
 		    int ynew_exist[ncl];
 		    for(int i=0;i<ncl;i++)
@@ -305,7 +305,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 	     int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
 	     int *ipi, double *classwt, double *cut, int *nodesize,
-	     int *outcl, int *counttr, double *prox,
+	     int *outcl, double *counttr, double *prox,
 	     double *imprt, double *impsd, double *impmat, int *nrnodes,
 	     int *ndbigtree, int *nodestatus, int *bestvar, int *treemap,
 	     int *nodeclass, double *xbestsplit, double *errtr,
