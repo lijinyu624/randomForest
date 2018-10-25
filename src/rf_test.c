@@ -240,10 +240,10 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    
 		    //normalize counttr
 		    int colsum[nsample];
-		    for (int n=0; n<nsample;n++){
+		    for (int n=0; n<nsample0;n++){
 		      colsum[n] = 0;
 		      for (int j=0;j<ncl;j++){
-		        if(counttr[nsample*j+n]) colsum[n]++;
+		        if(counttr[nsample0*j+n]) colsum[n]++;
 		      }
 		    }
 		 for (int n=0; n<nsample;n++) printf("%d,",colsum[n]);
