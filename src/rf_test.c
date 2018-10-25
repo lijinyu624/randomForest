@@ -246,7 +246,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		        if(counttr[nsample*j+n]) colsum[n]++;
 		      }
 		    }
-		 //for (int n=0; n<nsample;n++) printf("%d,",colsum[n]);
+		 for (int n=0; n<nsample;n++) printf("%d,",colsum[n]);
 		    for (int j=0;j<ncl;j++){
 		      for (int n=0; n<nsample;n++) 
 		        counttr[nsample*j+n] /= colsum[n];
@@ -267,12 +267,11 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    
 		    // claculate the graph parameters.
 		    double sum = 0;
-		    double logg[nsample];
-		    for (int n=0; n<nsample;n++){
-		      logg[n] = log(counttrnew[nsample*0+n]* counttrnew[nsample*3+n]/(counttrnew[nsample*1+n]*counttrnew[nsample*2+n]));
-		      sum -= logg[n];
-		    }
-		    
+					double logg[nsample];
+					for (int n=0; n<nsample;n++){
+						logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
+						sum -= logg[n];
+					}
 		    graph[i*mdim+i] = 0.0;
 		    graph[i*mdim+j] = sum/(2*nsample);
 		    graph[j*mdim+i] = sum/(2*nsample);	
