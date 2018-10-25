@@ -1,3 +1,4 @@
+
 /*****************************************************************
 Copyright (C) 2001-2012 Leo Breiman, Adele Cutler and Merck & Co., Inc.
 
@@ -35,7 +36,7 @@ void TestSetError(double *countts, int *jts, int *clts, int *jet, int ntest,
 
 /*  Define the R RNG for use from Fortran. */
 void F77_SUB(rrand)(double *r) { *r = unif_rand(); }
-	 
+
 void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
 	     int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
 	     int *ipi, double *classwt, double *cut, int *nodesize,
@@ -50,8 +51,8 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
              double * tx ,double * win ,double * tp ,int * out ,int * bestsplitnext ,int * bestsplit,int * nodepop,
              int * nodestart,int * jin ,int * nodex ,int * nodexts,int * ta ,int * ncase ,int * jerr ,
              int * varUsed ,int * jtr,int * jvr ,int * classFreq,int * jts ,int * idmove,
-             int * at ,int * a,int * b,int * mind, int* nright, int* nrightimp, int * nout, int* oobpair,int*  strata_size,int**  strata_idx,int* nind, int* nclts );			 
-			 
+             int * at ,int * a,int * b,int * mind, int* nright, int* nrightimp, int * nout, int* oobpair,int*  strata_size,int**  strata_idx,int* nind, int* nclts );
+
 void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
                        int *sampsize, int *strata, int *Options, int *ntree, int *nvar,
                        int *ipi, double *classwt, double *cut, int *nodesize,
@@ -64,10 +65,10 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
                        int *inbag, double *graph, double *counttrnew) {
 				 
 
-						 int mdim     = dimx[0];
+				 int mdim     = dimx[0];
   int nsample  = dimx[1];
   int xdimCount= mdim-2;
-  int xdimnew[2]={nsample,xdimCount};
+  int xdimnew[2]={xdimCount, nsample};
   
   //double* graph= (double *) S_alloc(mdim*mdim, sizeof(double));
   //double* counttrnew= (double *) S_alloc(4*nsample, sizeof(double));
@@ -75,16 +76,16 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
   zeroDouble(counttrnew, 4 * nsample);
 		
 		
-		double *xnew      = (double *) S_alloc(xdimCount* nsample, sizeof(double));
+		double *xnew      = (double *) S_alloc(nsample * xdimCount, sizeof(double));
 		int ynew[nsample];
 		
 		
-		int nsample0 = xdimnew[0];
+		int nsample0 = xdimnew[1];
 		int addClass = Options[0];
 		int nsample1 = addClass ? (nsample0 + nsample0) : nsample0;
-		int mdim1=xdimnew[1];
+		int mdim1=xdimnew[0];
 		//int nclass   = (*ncla==1) ? 2 : *ncla;
-		int nclass=100;
+		int nclass=4;
 		int ntest    = *nts;
 		int oobprox  = Options[4];
 		int *  strata_size, * oobpair, * nind, * nclts;
@@ -204,7 +205,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		      flagy = 0;
 		    }
 		    
-         // actual number of classes in the data: ncl (number of distinct values in y)
+		    // actual number of classes in the data: ncl (number of distinct values in y)
 					int ncl=1;
 					for (int k=1; k<nsample;k++) {
 						  for (int n=0; n<k;n++){
@@ -222,10 +223,12 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		        if(ynew_exist[ynew[k]]==0)
 		          ynew_exist[ynew[k]]=1;
 		    }
-			
+			for(int i=0;i<ncl;i++) Rprintf("ynewexist:%d,",ynew_exist[i]);
+		    
+		    
 		    
 		    // predict using RF classification
-		     classRF(xnew, xdimnew, ynew, &ncl, cat, maxcat,
+		    classRF(xnew, xdimnew, ynew, &ncl, cat, maxcat,
               sampsize, strata, Options, ntree, nvar,
               ipi, classwt, cut, nodesize, outcl, counttr, prox,
               imprt, impsd, impmat, nrnodes, ndbigtree, nodestatus, bestvar, treemap,
@@ -237,41 +240,44 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
               varUsed ,jtr, jvr , classFreq,jts , idmove,
               at , a,b, mind,  nright, nrightimp,  nout ,oobpair, strata_size, strata_idx,nind, nclts);
 		    
-			
-			 //normalize counttr
-		    double colsum[nsample];
+		    
+		    
+		    
+		    //normalize counttr
+		    int colsum[nsample];
 		    for (int n=0; n<nsample;n++){
-		      colsum[n] = 0.0;
+		      colsum[n] = 0;
 		      for (int j=0;j<ncl;j++){
-		        colsum[n]+=counttr[nsample*j+n];
+		        colsum[n] += counttr[n*ncl+j];
 		      }
-		    }
-			
-		 for (int n=0; n<nsample;n++) printf("%d,",colsum[n]);
-			
+		    
 		    
 		    //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
+		    int s = 0;
+		    printf("%d",s);
 		    for (int j=0;j<4;j++){
 		      for (int n=0; n<nsample;n++) 
 		           if(ynew_exist[j]==1)
-		                 counttrnew[nsample*j+n] = counttr[nsample*j+n]/colsum[n] + 0.000001;	
+		                 counttrnew[n*4 + j] = counttr[n*ncl + j] + 0.000001;	
 		           else
-		             counttrnew[nsample*j+n] =0.0+0.000001;
+		             counttrnew[n*4 + j] =0;
 		    }
 		    
 		    
 		    
 		    
 		    // claculate the graph parameters.
-		    double sum = 0;
-					double logg[nsample];
-					for (int n=0; n<nsample;n++){
-						logg[n] = log(counttrnew[nsample*0+n]* counttrnew[nsample*3+n]/(counttrnew[nsample*2+n]*counttrnew[n*2+n]));
-						sum -= logg[n];
-					}
+		    printf("%d",s);
+		    int sum = 0;
+		    double logg[nsample];
+		    for (int n=0; n<nsample;n++){
+		      logg[n] = log(counttrnew[n*4+0]* counttrnew[n*4+3]/(counttrnew[n*4+1]*counttrnew[n*4+2]));
+		      sum -= logg[n];
+		    }
+		    
 		    graph[i*mdim+i] = 0.0;
-		    graph[i*mdim+j] = sum/(2*nsample);
-		    graph[j*mdim+i] = sum/(2*nsample);	
+		    graph[i*mdim+j] = sum/nsample;
+		    graph[j*mdim+i] = sum/nsample;	
 		  
 		  
 		   
@@ -986,3 +992,5 @@ void TestSetError(double *countts, int *jts, int *clts, int *jet, int ntest,
 		for (n = 1; n <= nclass; ++n) errts[n] /= nclts[n-1];
     }
 }
+rf_test.c
+当前显示rf_test.c。
