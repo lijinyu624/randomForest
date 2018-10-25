@@ -215,15 +215,15 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 						}
 					Rprintf("%d,",ncl);
 			
-		    int ynew_exist[ncl];
-		    for(int i=0;i<ncl;i++)
+		    int ynew_exist[4];
+		    for(int i=0;i<4;i++)
 		       ynew_exist[i]=0;
 		 
 		    for (int k=0; k<nsample;k++) {
 		        if(ynew_exist[ynew[k]]==0)
 		          ynew_exist[ynew[k]]=1;
 		    }
-			for(int i=0;i<ncl;i++) Rprintf("ynewexist:%d,",ynew_exist[i]);
+			for(int i=0;i<4;i++) Rprintf("ynewexist:%d,",ynew_exist[i]);
 		    
 		    
 		    
