@@ -243,7 +243,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    for (int n=0; n<nsample;n++){
 		      colsum[n] = 0;
 		      for (int j=0;j<ncl;j++){
-		        if(counttr[n*ncl+j]) colsum[n]++;
+		        if(counttr[nsample*j+n]) colsum[n]++;
 		      }
 		    }
 		 for (int n=0; n<nsample;n++) printf("%d,",colsum[n]);
