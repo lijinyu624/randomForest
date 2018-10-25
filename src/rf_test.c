@@ -228,7 +228,6 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		          }
 		        if(n==k-1){
 		           ncl++;
-		          //Rprintf("+%d+",&ncl);
 		          }
 		        
 		         
@@ -236,7 +235,8 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		      }
 		   
 		    }
-		    
+		    Rprintf("+%d+",ncl);
+			
 		    int ynew_exist[ncl];
 		    for(int i=0;i<ncl;i++)
 		       ynew_exist[i]=0;
@@ -270,6 +270,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		        colsum[n] += counttr[n*ncl+j];
 		      }
 		    }
+		 for (int n=0; n<nsample;n++) Rprintf("d%,",colsum[n]);
 		    for (int j=0;j<ncl;j++){
 		      for (int n=0; n<nsample;n++) 
 		        counttr[n*ncl+j] /= colsum[n];
