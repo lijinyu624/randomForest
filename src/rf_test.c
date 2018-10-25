@@ -254,14 +254,17 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
 		    //for (int n=0; n<nsample;n++) Rprintf("csum:%d,",colsum[n]);
 		    
 		    //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
-		   //write the out matrix as 4 x n. if ncl < 4, fill the rows with 0.
+			
+			for (int n=0; n<nsample;n++){
+				int s=0;
 		    for (int j=0;j<4;j++){
-		      for (int n=0; n<nsample;n++) 
-		           if(ynew_exist[j]==1)
-		                 counttrnew[nsample*j+n] = counttr[nsample*j+n]/(colsum[n]+0.000001) + 0.000001;	
-		           else
-		             counttrnew[nsample*j+n] =0.0+0.000001;
-		    }
+		           if(ynew_exist[j]==1){
+		                 counttrnew[nsample*j+n] = counttr[nsample*s+n]/(colsum[n]+0.000001) + 0.000001;
+						 s++;
+				   }
+		           else 
+					   counttrnew[nsample*j+n] =0.0+0.000001;
+		    }}
 		    
 		    
 		    
@@ -270,7 +273,7 @@ void classRFIsingGraph(double *x, int *dimx, int *cat, int *maxcat,
             double sum = 0;
 					double logg[nsample];
 					for (int n=0; n<nsample;n++){
-						logg[n] = log(counttrnew[nsample*0+n]* counttrnew[nsample*3+n]/(counttrnew[nsample*2+n]*counttrnew[n*2+n]));
+						logg[n] = log(counttrnew[nsample*0+n]* counttrnew[nsample*3+n]/(counttrnew[nsample*1+n]*counttrnew[n*2+n]));
 						sum -= logg[n];
 					}
 		    graph[i*mdim+i] = 0.0;
