@@ -620,7 +620,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           noutall++;
         }
       }
-      
+      Rprintf("n%d,",noutall);
       /* Compute out-of-bag error rate. */
       /*oob(nsample, nclass, cl, jtr, jerr, counttr, out,
             errtr + jb*(nclass+1), outcl, cut);*/
