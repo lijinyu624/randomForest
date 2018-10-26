@@ -616,7 +616,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           /* count number of OOB cases in the current iteration.
           nout[n] is the number of OOB cases for the n-th class.
           noutall is the number of OOB cases overall. */
-          nout[cl[n] - 1]++;
+          nout[cl[n]]++;
           noutall++;
         }
       }
