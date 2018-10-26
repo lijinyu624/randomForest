@@ -545,8 +545,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
                 jin[k] += 1;
               }
             }
-			int sumj = 0;
-			for (n = 0; n < nsample; ++n) sumj += jin[n]; Rprintf('j%d',sumj);
+			
             /* check if any class is missing in the sample */
             for (n = 0; n < nclass; ++n) {
               if (tclasspop[n] == 0.0) nEmpty++;
@@ -557,7 +556,8 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           if (nclass - nEmpty < 2) error("Still have fewer than two classes in the in-bag sample after 30 attempts.");
         }
         
-        
+        int sumj = 0;
+		for (n = 0; n < nsample; ++n) sumj += jin[n]; Rprintf("j%d,",sumj);
         
         
         
