@@ -557,7 +557,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
         }
         
         int sumj = 0;
-		for (n = 0; n < nsample; ++n) sumj += jin[n]; Rprintf("j%d,",sumj);
+		for (int nn = 0; nn < nsample; ++nn) sumj += jin[nn]; Rprintf("j%d,",sumj);
         
         
         
