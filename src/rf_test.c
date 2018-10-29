@@ -545,7 +545,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
                 jin[k] += 1;
               }
             }
-			
+			for (n = 0; n < *sampsize; ++n) Rprintf('%d',jin[n]);
             /* check if any class is missing in the sample */
             for (n = 0; n < nclass; ++n) {
               if (tclasspop[n] == 0.0) nEmpty++;
@@ -556,9 +556,8 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           if (nclass - nEmpty < 2) error("Still have fewer than two classes in the in-bag sample after 30 attempts.");
         }
         
-        int sumj = 0;
-		//for (int nn = 0; nn < nsample; ++nn) sumj += jin[nn]; Rprintf("j%d,",sumj);
-        Rprintf("nsample%d,",nsample);
+        
+        
         
         
         /* If need to keep indices of inbag data, do that here. */
@@ -612,17 +611,17 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
       for (n = 0; n < nsample; ++n) {
         if (jin[n] == 0) {
           /* increment the OOB votes */
-          counttr[n*nclass + jtr[n]] ++;
+          counttr[n*nclass + jtr[n] - 1] ++;
           /* count number of times a case is OOB */
           out[n]++;
           /* count number of OOB cases in the current iteration.
           nout[n] is the number of OOB cases for the n-th class.
           noutall is the number of OOB cases overall. */
-          nout[cl[n]]++;
+          nout[cl[n] - 1]++;
           noutall++;
         }
       }
-      Rprintf("n%d,",noutall);
+      Rprintf("nout%d", noutall);
       /* Compute out-of-bag error rate. */
       /*oob(nsample, nclass, cl, jtr, jerr, counttr, out,
             errtr + jb*(nclass+1), outcl, cut);*/
@@ -781,55 +780,9 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           proxts[ntest * n + n] = 1.0;
         }
       }
-    }			  		
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }			  		   
     
 }
-
 
 void classForest(int *mdim, int *ntest, int *nclass, int *maxcat,
                  int *nrnodes, int *ntree, double *x, double *xbestsplit,
