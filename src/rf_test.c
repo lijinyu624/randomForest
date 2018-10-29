@@ -556,7 +556,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
         }
         
         int sumj = 0;
-		for (int nn = 0; nn < nsample; ++nn) sumj += jin[nn]; Rprintf("j%d,",sumj);
+		for (n = 0; n < *sampsize; ++n) sumj += jin[n]; Rprintf("j%d,",sumj);
         //Rprintf("nsample%d,",nsample);
         
         
@@ -617,7 +617,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
           /* count number of OOB cases in the current iteration.
           nout[n] is the number of OOB cases for the n-th class.
           noutall is the number of OOB cases overall. */
-          nout[cl[n]]++;
+          nout[cl[n]-1]++;
           noutall++;
         }
       }
