@@ -545,6 +545,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
                 jin[k] += 1;
               }
             }
+
             /* check if any class is missing in the sample */
             for (n = 0; n < nclass; ++n) {
               if (tclasspop[n] == 0.0) nEmpty++;
@@ -556,7 +557,7 @@ void classRF(double *x, int *dimx, int *cl, int *ncl, int *cat, int *maxcat,
         }
         
         int sumj = 0;
-		for (n = 0; n < *sampsize; ++n) sumj += jin[n]; Rprintf("j%d,",sumj);
+		for (int nn = 0; nn < nsample; ++nn) sumj += jin[nn]; Rprintf("j%d,",sumj);
         //Rprintf("nsample%d,",nsample);
         
         
